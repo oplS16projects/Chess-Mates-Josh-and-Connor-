@@ -1,38 +1,78 @@
 # Chess-Mates-Josh-and-Connor-
 
-FP4-proposal
-Students: this document is actively being revised. All dates and info are subject to change.
+Project Title: title here (10 words maximum)
+Statement
 
-Project Proposal is due Mon 2016-04-04 (for Mark's section, at least)
+Describe your project. Why is it interesting? Why is it interesting to you personally? What do you hope to learn?
 
-Produce a plan for your final project, and prepare an in-class presentation.
-Start your real project repository
-Ask questions, as always, on our discussion forum!
+Analysis
 
-Written Proposal Instructions
+Explain what approaches from class you will bring to bear on the project. Be explicit: e.g., will you use recursion? How? Will you use map/filter/reduce? How? Will you use data abstraction? Will you use object-orientation? Will you use functional approaches to processing your data? Will you use state-modification approaches? A combination?
 
-Teams will submit ONE written proposal, with sections that each member has done individually detailing their proposed contributions. The submission will be the README.md file in your brand-new project repository, which you'll make.
+The idea here is to identify what ideas from the class you will use in carrying out your project.
 
-You must start using GitHub collaboratively from this point forward.
+Data set or other source materials
 
-Instructions:
+If you will be working with existing data, where will you get those data from? (Dowload it from a website? access it in a database? create it in a simulation you will build....)
 
-create a new repo as part of the oplS16projects organization; add your teammates to it
-Copy the content from the template file into your README.md
-Everyone on the team contributes their sections to your README.md file.
-Send Fred/Mark the link to your new repository (exactly how TBD)
-And now some detail on what to write in the report.
+How will you convert that data into a form usable for your project?
 
-Overall guidance: You should be proposing something that you have high confidence that you can achieve, and the proposal should project that confidence.
+Do your homework here: if you are pulling data from somewhere, actually go download it and look at it. Explain in some detail what your plan is for accomplishing the necessary processing.
 
-The proposal should be no longer than necessary, but long enough to include critical detail. Three pages is appropriate. Diagrams are welcome.
+If you are using some other starting materails, explain what they are. Basically: anything you plan to use that isn't code.
 
-Remember, you can do some neat formatting things with Markdown.
+Deliverable and Demonstration
 
-In case you missed it, here again is the template file
+Explain exactly what you'll have at the end. What will it be able to do at the live demo?
 
-In-Class Presentation Instructions
+What exactly will you produce at the end of the project? A piece of software, yes, but what will it do? Here are some questions to think about (and answer depending on your application).
 
-Teams will each deliver an in-class presentation.
+Will it run on some data, like batch mode? Will you present some analytical results of the processing? How can it be re-run on different source data?
 
-Your team will have two minutes to present. Create presentation with two or three slides. Make the slides in google drive, and share the public-viewable link with Mark/Fred (exactly how TBD). The day of presentations, I'll have the list of links on the display computer, so each team can simply click their link and begin.
+Will it be interactive? Can you show it working? This project involves a live demo, so interactivity is good.
+
+Evaluation of Results
+
+How will you know if you are successful? If you include some kind of quantitative analysis, that would be good.
+
+Work Plan and Schedule
+
+Explain how you will go from proposal to finished product. Write your plan here.
+
+There are three deliverable milestones to explicitly define, below.
+
+The nature of deliverables depend on your project, but may include things like processed data ready for import, core algorithms implemented, interface design prototyped, etc.
+
+You will be expected to turn in code, documentation, and data (as appropriate) at each of these stages, so take care in writing concrete steps for your schedule.
+
+First Milestone (04-13)
+
+What exactly will be turned in on this day?
+
+Second Milestone (04-21)
+
+What exactly will be turned in on this day?
+
+Group Responsibilities
+
+Here each group member gets a section where they, as an individual, detail what they are responsible for in this project. Each group member writes their own Responsibility section. Include the milestones and final deliverable.
+
+Additional instructions for teams of three:
+
+Remember that you must have prior written permission to work in groups of three (specifically, an approved FP3 team declaration submission).
+The team must nominate a lead. This person is primarily responsible for code integration. This work may be shared, but the team lead has default responsibility.
+The team lead has full partner implementation responsibilities also.
+Identify who is team lead.
+In the headings below, replace the silly names and GitHub handles with your actual ones.
+
+Susan Scheme @susanscheme
+
+will write the....
+
+Leonard Lambda @lennylambda
+
+will work on...
+
+Frank Functions @frankiefunk
+
+Frank is team lead. Additionally, Frank will work on...
