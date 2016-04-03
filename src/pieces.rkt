@@ -15,6 +15,9 @@
  pawn% rook% bishop% knight% king% queen%
  make-piece)
 
+;; bindings for the individual class symbols, good to have
+;; compile-time checking that you typed in the piece name
+;; correctly
 (define pawn% 'pawn)
 (define rook% 'rook)
 (define bishop% 'bishop)
@@ -22,6 +25,7 @@
 (define king% 'king)
 (define queen% 'queen)
 
+;; factory function for pieces
 (define (make-piece type team tile)
   (cond ((eq? type pawn%)
          (make-pawn team tile))
@@ -37,6 +41,9 @@
          (make-queen team tile))
         (else (error type "Invalid type tag for MAKE-PIECE."))))
 
+;; implementation for the underlying functionality that is common
+;; to all chess pieces. This should be thought of as an abstract
+;; base class, do NOT instantiate these directly.
 (define (make-piece-impl type team tile)
 
   (define (get-type) type)
@@ -53,6 +60,12 @@
           ((eq? msg 'get-team) get-team)
           ((eq? msg 'get-tile) get-tile)
           (else (error "Unrecognized method for" (get-type) ': msg)))))
+
+
+;;
+;; NOTE: these classes are very bare-bones atm, all they can do is draw
+;; themselves and call methods inhereted from their base classes.
+;;
 
 ;; PAWN
 (define (make-pawn team tile)
