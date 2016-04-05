@@ -1,10 +1,10 @@
-# Chess-Mates-Josh-and-Connor-
+# Chess-Mates-Josh-and-Conor-
 
 # Project Title: title here (10 words maximum)
 
 ### Statement
 
-Connor and I are going to design and implement the rules and UI of chess.  Both Connor and I have some interest in the game of chess.  How it works, and the stratagey beyond the basic mindset of a chess player.  We hope to learn how to incorporate both back end and a visually appealing UI.  We also hope to learn how to use racket to solve complicated problems in a unique way.
+Conor and I are going to design and implement the rules and UI of chess.  Both Conor and I have some interest in the game of chess.  How it works, and the stratagey beyond the basic mindset of a chess player.  We hope to learn how to incorporate both back end and a visually appealing UI.  We also hope to learn how to use racket to solve complicated problems in a unique way.
 
 ### Analysis
 Map/Filter/Reduce for tile representation.  A piece must know where it is on the board before it figures out the possible moves it can make.  Polymorphism for each piece thats responsible to know which moves it can make, and to know what piece it is.  Maybe identity functions?  Most back end coding will be enforcing both players to play by the rules.  
