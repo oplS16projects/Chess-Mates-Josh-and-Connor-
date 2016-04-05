@@ -22,6 +22,8 @@ It will be a successful chess game if it forces the players to play by the rules
 ## Architecture Diagram
 Upload the architecture diagram you made for your slide presentation to your repository, and include it in-line here.
 
+![alt-tag](https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/blob/master/ArchDiagram.jpg)
+
 Create several paragraphs of narrative to explain the pieces and how they interoperate.
 
 ## Schedule
