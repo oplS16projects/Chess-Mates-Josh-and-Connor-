@@ -21,7 +21,17 @@ It will be a successful chess game if it forces the players to play by the rules
 ## Architecture Diagram
 ![alt-tag](https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/blob/master/ArchDiagram.jpg)
 
-Create several paragraphs of narrative to explain the pieces and how they interoperate.
+The above diagram splits the program into three parts: Conor's responsibilites, Josh's responsibilities, and classes that will likely be worked on by both of us. Note that these diagrams represent interfaces to the rest of the program, and not necessarily entire implementations.
+
+###Common Module:
+The "common" section contains two classes: `board` and `tile`. 
+
+The `tile` class represents an individual tile on the chess board. it is aware of its own X and Y coordinates (accessed through the `get-x` and `get-y` accessor methods) and the piece that it is holding (accessed through `get-piece`). If the tile is empty, then `get-piece` returns `'()`. We may implement an `is-empty?` method as a short-hand to check if the tile is empty. Additionally, `tile` contains a `set-piece` method which is used to move pieces around the board. Finally, the `draw` method will be used by Josh to draw an individual tile. This method will be responsible for drawing the tile at the correct location, as well as for calling the draw method for the piece it owns (if applicable).
+
+The `board` class represents an entire chess board, and essentially represents a collection of tiles, which can be accessed by their X and Y coordinates. The `reset` method clears all tiles and puts the board in a "beginning of game" state. This method is called by the constructor, so hopefully a board will never be in an invalid state. The `get-tile-at` method returns a tile at a given X/Y location. The `get-all-tiles` method returns a list of all tiles, which will be useful for mapping/filtering over all tiles. We plan on storing the tiles in a flat list, which will (slightly) complicate the `get-tile-at` method implementation, but will make `get-all-tiles` very straightforward, and will hopefully help with optimization. Finally, the `draw` method will be used by Josh to draw the entire board at once. This method will be responsible for calling the draw methods for the individual tiles that it owns.
+
+###Conor's Module:
+Conor's module only contains one publicly accessible class, `piece`. This is an interface representing a chess piece. Chess pieces can be queried for their type using the `get-type` method, but beyond that look identical to an outside caller. The `get-team` method returns a symbol representing the piece's team, and the `draw` method will be used by Josh's code to get the sprite associated with the piece. The `get-valid-moves` method is where most of the complexity in this module will come from, as each chess piece will have significantly different criteria defining what a "valid" move is. This method will return a list of tiles, or an empty list if no valid moves exist. Although our diagram suggests that 
 
 ## Schedule
 Explain how you will go from proposal to finished product. 
