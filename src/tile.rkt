@@ -16,16 +16,16 @@
 (provide make-tile)
 
 ;; constructor for "tile" class
-(define (make-tile x y board piece)
+(define (make-tile x y)
+
+  ;; piece member variable
+  (define piece '())
 
   ;; getter method for X coord
   (define (get-x) x)
 
   ;; getter method for Y coord
   (define (get-y) y)
-
-  ;; getter method for the board that owns this tile
-  (define (get-board) board)
 
   ;; getter method for the piece on this tile
   (define (get-piece) piece)
@@ -36,11 +36,17 @@
   (define (set-piece new-piece)
     (set! piece new-piece))
 
+  ;; draw method (WIP)
+  (define (draw)
+    (if (null? piece)
+        " "
+        ((piece 'draw))))
+
   ;; dispatch
   (λ (msg)
     (cond ((eq? msg 'get-x) get-x)
           ((eq? msg 'get-y) get-y)
-          ((eq? msg 'get-board) get-board)
           ((eq? msg 'get-piece) get-piece)
           ((eq? msg 'set-piece) set-piece)
+          ((eq? msg 'draw) draw)
           (else (error msg "Invalid method for TILE")))))
