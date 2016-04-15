@@ -1,0 +1,4 @@
+src/compiled/drracket/errortrace/pieces_rkt.dep
+*.zo
+src/compiled/drracket/errortrace/teams_rkt.dep
+*.dep
