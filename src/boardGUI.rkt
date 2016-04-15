@@ -2,6 +2,7 @@
 ;(require racket/gui)
 (require graphics/graphics)
 
+;multiple definitons
 (define horiz-inset 200)
 (define vert-inset 35)
 (define right-gap 200)
@@ -29,6 +30,7 @@
 (define board ideal-board)
 (define board1 board)
 
+;actaully draws board....calling (game) draws the board
 (define (game)
   (define countt 0)
   (set! player 'W)
@@ -49,11 +51,13 @@
         (if (= j 9) (db (+ i 1) 1)
             (begin
               ((draw-pixmap random-board) (if (even? (+ i j)) "../Images/White_Tile.png" "../Images/Black_Tile.png")
-                                            (make-posn (+ horiz-inset (* 75 (- i 1))) (+ vert-inset (* 75 (- j 1))))
+                                            (make-posn (+ horiz-inset (* 75 (- i 1))) (+ vert-inset (* 75 (- j 1)))) ;adjust to board size
                                             (make-rgb 0 0 0))
               (db i (+ j 1))))))
   ;make code own a board.  when it draws, map over tiles to use info from tiles
   (db 1 1)
+  ;imports images
+  
   ; ((draw-pixmap random-board) "Images/Black_Pawn.png" (make-posn 0 0) (make-rgb 0 0 0))
   ((draw-pixmap random-board) "../Images/Black_Pawn.png" (make-posn 12 90) (make-rgb 0 0 0))
   ((draw-pixmap random-board) "../Images/Black_King.png" (make-posn 12 165) (make-rgb 0 0 0))
