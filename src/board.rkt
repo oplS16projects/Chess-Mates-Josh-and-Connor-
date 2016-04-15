@@ -81,10 +81,17 @@
     (map reset-tile tiles))
 
   ;; Move-piece method
+  ;; TODO: check if move is valid before allowing move
   (define (move-piece orig-tile dest-tile)
     (let ((orig-piece ((orig-tile 'get-piece)))
           (dest-piece ((dest-tile 'get-piece))))
-      1))
+
+      (if (null? orig-piece)
+          "origin tile empty - move aborted"
+          (begin
+            ((dest-tile 'set-piece) orig-piece)
+            ((orig-tile 'set-piece) '())
+            "Successfully moved piece"))))
            
 ;    (if (null? ((orig-tile 'get-piece)))
 ;        (error "Error: Can't move from a tile with no piece")
@@ -115,3 +122,6 @@
     (initialize)
     (reset)
     dispatch))
+
+(define b (make-board))
+((b 'move-piece) ((b 'tile-at) 0 1) ((b 'tile-at) 0 2))
