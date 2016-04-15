@@ -27,6 +27,9 @@
     (list-ref tiles
               (+ (* board-max y) x)))
 
+  ;; method to return flat list of all tiles
+  (define (get-all-tiles) tiles)
+
   ;; initialization function, automatically called
   ;; when make-board is called
   (define (initialize)
@@ -77,6 +80,15 @@
     
     (map reset-tile tiles))
 
+  ;; Move-piece method
+  (define (move-piece orig-tile dest-tile)
+    (let ((orig-piece ((orig-tile 'get-piece)))
+          (dest-piece ((dest-tile 'get-piece))))
+      1))
+           
+;    (if (null? ((orig-tile 'get-piece)))
+;        (error "Error: Can't move from a tile with no piece")
+
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)
     (((tile-at x y) 'draw)))
@@ -92,7 +104,9 @@
   ;; dispatch method
   (define (dispatch msg)
     (cond ((eq? msg 'tile-at) tile-at)
+          ((eq? msg 'get-all-tiles) get-all-tiles)
           ((eq? msg 'draw) draw)
+          ((eq? msg 'move-piece) move-piece)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
