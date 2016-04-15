@@ -53,6 +53,8 @@ Not all pieces working correctly, but having place holder functions implemented 
 
 **Josh:**
 Having the board appear, and pieces on the board in the correct position.  Nothing would work, but the place holders are there and ready to go.
+
+First Milestone update 4/15/16:  Josh has created a file called boardGUI.   If you open that file and write `(game)` in the repl, you will get a popup visual of a chess board.  Conor has expanded........
 ### Second Milestone (Fri Apr 22)
 **Conor:**
 Basic, unoptimized path finding functions for pieces.

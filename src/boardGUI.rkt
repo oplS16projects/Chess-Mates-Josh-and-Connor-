@@ -52,7 +52,7 @@
                                             (make-posn (+ horiz-inset (* 75 (- i 1))) (+ vert-inset (* 75 (- j 1))))
                                             (make-rgb 0 0 0))
               (db i (+ j 1))))))
-  
+  ;make code own a board.  when it draws, map over tiles to use info from tiles
   (db 1 1)
   ; ((draw-pixmap random-board) "Images/Black_Pawn.png" (make-posn 0 0) (make-rgb 0 0 0))
   ((draw-pixmap random-board) "Images/Black_Pawn.png" (make-posn 12 90) (make-rgb 0 0 0))
