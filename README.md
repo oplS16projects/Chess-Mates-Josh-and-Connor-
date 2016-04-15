@@ -54,7 +54,47 @@ Not all pieces working correctly, but having place holder functions implemented 
 **Josh:**
 Having the board appear, and pieces on the board in the correct position.  Nothing would work, but the place holders are there and ready to go.
 
-First Milestone update 4/15/16:  Josh has created a file called boardGUI.   If you open that file and write `(game)` in the repl, you will get a popup visual of a chess board.  Conor has expanded........
+First Milestone update 4/15/16:  Josh has created a file called boardGUI.   If you open that file and write `(game)` in the repl, you will get a popup visual of a chess board.  
+
+Conor has baseline placeholder functionality for moving pieces working. Currently you can only move a white pawn up one space at a time because this is the only piece with a valid `get-valid-moves` method, but the framework is there to move pieces around the board and check for the validity of these moves. You can paste the following series of expressions into the REPL fo for `board.rkt` to test this functionality.
+
+The following code will successfully move a pawn from tile (0, 6) to (0, 5):
+```
+(define b (make-board))
+((b 'draw))
+(newline)
+
+(define t ((b 'tile-at) 0 6))
+
+((b 'move-piece) t ((b 'tile-at) 0 5))
+(newline)
+
+((b 'draw))
+```
+
+The following code will attempt to move a pawn from tile (0, 6) to (5, 5), but fails because this is not a valid move for a pawn:
+```
+(define b2 (make-board))
+((b2 'draw))
+(newline)
+
+(define t2 ((b2 'tile-at) 0 6))
+
+((b2 'move-piece) t2 ((b2 'tile-at) 5 5))
+(newline)
+
+((b2 'draw))
+```
+
+The following code will attempt to move a piece from tile (3, 3) to (4, 4), but fails because there is no piece on tile (3, 3):
+```
+(define b3 (make-board))
+((b3 'draw))
+(newline)
+
+((b3 'move-piece) ((b3 'tile-at) 3 3) ((b3 'tile-at) 4 4))
+```
+
 ### Second Milestone (Fri Apr 22)
 **Conor:**
 Basic, unoptimized path finding functions for pieces.
