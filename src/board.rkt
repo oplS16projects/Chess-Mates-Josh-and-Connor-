@@ -13,12 +13,12 @@
 (require "pieces.rkt")
 (require "teams.rkt")
 
-(provide make-board)
+(provide make-board board-max)
+
+;; chess is played on an 8x8 board
+(define board-max 8)
 
 (define (make-board)
-  ;; chess is played on an 8x8 board
-  (define board-max 8)
-
   ;; list of tiles, defaults to null
   (define tiles '())
 
@@ -82,16 +82,31 @@
 
   ;; Move-piece method
   ;; TODO: check if move is valid before allowing move
+;  (define (move-piece orig-tile dest-tile)
+;    (let ((orig-piece ((orig-tile 'get-piece)))
+;          (dest-piece ((dest-tile 'get-piece))))
+;
+;      (if (null? orig-piece)
+;          "origin tile empty - move aborted"
+;          (begin
+;            ((dest-tile 'set-piece) orig-piece)
+;            ((orig-tile 'set-piece) '())
+;            "Successfully moved piece"))))
+
   (define (move-piece orig-tile dest-tile)
     (let ((orig-piece ((orig-tile 'get-piece)))
           (dest-piece ((dest-tile 'get-piece))))
 
       (if (null? orig-piece)
           "origin tile empty - move aborted"
-          (begin
-            ((dest-tile 'set-piece) orig-piece)
-            ((orig-tile 'set-piece) '())
-            "Successfully moved piece"))))
+
+          (let ((valid-moves ((orig-piece 'get-valid-moves) dispatch)))
+            (if (not (eq? #f (member dest-tile valid-moves)))
+                (begin
+                  ((dest-tile 'set-piece) orig-piece)
+                  ((orig-tile 'set-piece) '())
+                  "Successfully moved piece")
+                "Selection was not valid - move aborted")))))
 
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)

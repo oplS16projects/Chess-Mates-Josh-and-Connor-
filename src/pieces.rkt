@@ -73,8 +73,26 @@
 
   (define (draw) 'P)
 
+  (define (get-white-moves board)
+    (let ((x-pos ((tile 'get-x)))
+          (y-pos ((tile 'get-y))))
+      (let ((next-y (- y-pos 1)))
+
+        (if (< next-y 0)
+            '()
+            (list ((board 'tile-at) x-pos next-y))))))
+
+  (define (get-black-moves board)
+    2)
+
+  (define (get-valid-moves board)
+    (if (eq? ((base 'get-team)) white-team)
+        (get-white-moves board)
+        (get-black-moves board)))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
           (else (base msg)))))
 
 ;; ROOK
