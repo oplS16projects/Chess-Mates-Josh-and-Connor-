@@ -48,7 +48,7 @@
     (if (= i 9) (set! trash 0)
         (if (= j 9) (db (+ i 1) 1)
             (begin
-              ((draw-pixmap random-board) (if (even? (+ i j)) "Images/White_Tile.png" "Images/Black_Tile.png")
+              ((draw-pixmap random-board) (if (even? (+ i j)) "../Images/White_Tile.png" "../Images/Black_Tile.png")
                                             (make-posn (+ horiz-inset (* 75 (- i 1))) (+ vert-inset (* 75 (- j 1))))
                                             (make-rgb 0 0 0))
               (db i (+ j 1))))))
