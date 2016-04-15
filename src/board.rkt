@@ -92,9 +92,6 @@
             ((dest-tile 'set-piece) orig-piece)
             ((orig-tile 'set-piece) '())
             "Successfully moved piece"))))
-           
-;    (if (null? ((orig-tile 'get-piece)))
-;        (error "Error: Can't move from a tile with no piece")
 
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)
@@ -122,6 +119,3 @@
     (initialize)
     (reset)
     dispatch))
-
-(define b (make-board))
-((b 'move-piece) ((b 'tile-at) 0 1) ((b 'tile-at) 0 2))
