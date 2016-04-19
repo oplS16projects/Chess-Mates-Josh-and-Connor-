@@ -59,6 +59,7 @@
     (cond ((eq? msg 'get-type) get-type)
           ((eq? msg 'get-team) get-team)
           ((eq? msg 'get-tile) get-tile)
+          ((eq? msg 'set-tile) set-tile)
           (else (error "Unrecognized method for" (get-type) ': msg)))))
 
 

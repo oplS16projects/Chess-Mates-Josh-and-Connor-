@@ -12,6 +12,8 @@
 (require "tile.rkt")
 (require "pieces.rkt")
 (require "teams.rkt")
+(require "call.rkt")
+(require "move-result.rkt")
 
 (provide make-board board-max)
 
@@ -80,33 +82,29 @@
     
     (map reset-tile tiles))
 
-  ;; Move-piece method
-  ;; TODO: check if move is valid before allowing move
-;  (define (move-piece orig-tile dest-tile)
-;    (let ((orig-piece ((orig-tile 'get-piece)))
-;          (dest-piece ((dest-tile 'get-piece))))
-;
-;      (if (null? orig-piece)
-;          "origin tile empty - move aborted"
-;          (begin
-;            ((dest-tile 'set-piece) orig-piece)
-;            ((orig-tile 'set-piece) '())
-;            "Successfully moved piece"))))
-
+  ;; move-piece method, takes 2 tiles as arguments and
+  ;; attempts to move the piece from the former tile
+  ;; to the latter tile. This method should only allow the
+  ;; move complete if it abides by the rules of chess, but
+  ;; it should never error. Returns a data structure
+  ;; representing the results of the move, including a string
+  ;; representing success or failure and a reference to any piece
+  ;; removed from the board because of this move.
   (define (move-piece orig-tile dest-tile)
     (let ((orig-piece ((orig-tile 'get-piece)))
           (dest-piece ((dest-tile 'get-piece))))
 
       (if (null? orig-piece)
-          "origin tile empty - move aborted"
+          (make-move-result "origin tile empty - move aborted" '())
 
           (let ((valid-moves ((orig-piece 'get-valid-moves) dispatch)))
             (if (not (eq? #f (member dest-tile valid-moves)))
                 (begin
-                  ((dest-tile 'set-piece) orig-piece)
-                  ((orig-tile 'set-piece) '())
-                  "Successfully moved piece")
-                "Selection was not valid - move aborted")))))
+                  (call dest-tile 'set-piece orig-piece)
+                  (call orig-piece 'set-tile dest-tile)
+                  (call orig-tile 'set-piece '())
+                  (make-move-result "Successfully moved piece" dest-piece))
+                (make-move-result "Selection was not valid - move aborted" '()))))))
 
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)
