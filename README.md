@@ -54,7 +54,7 @@ Not all pieces working correctly, but having place holder functions implemented 
 **Josh:**
 Having the board appear, and pieces on the board in the correct position.  Nothing would work, but the place holders are there and ready to go.
 
-First Milestone update 4/15/16:  Josh has created a file called boardGUI.   If you open that file and write `(game)` in the repl, you will get a popup visual of a chess board.  
+First Milestone update 4/15/16:  Josh has created a file called `boardGUI.rkt`.   If you open that file and write `(game)` in the REPL, you will get a popup visual of a chess board.  
 
 Conor has baseline placeholder functionality for moving pieces working. Currently you can only move a white pawn up one space at a time because this is the only piece with a valid `get-valid-moves` method, but the framework is there to move pieces around the board and check for the validity of these moves. You can paste the following series of expressions into the REPL for `board.rkt` to test this functionality.
 
