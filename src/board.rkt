@@ -24,10 +24,19 @@
   ;; list of tiles, defaults to null
   (define tiles '())
 
-  ;; returns a tile at the given 
+  ;; returns a tile at the given X/Y coord
+  ;; returns '() for an invalid coord
+  ;; this silent, soft failure is useful for
+  ;; methods that accumulate the tiles around
+  ;; a piece - these methods will more easily be able to
+  ;; deal with board boundries.
   (define (tile-at x y)
-    (list-ref tiles
-              (+ (* board-max y) x)))
+    (if (or (>= x board-max)
+            (>= y board-max)
+            (< x 0) (< y 0))
+        '()
+        (list-ref tiles
+                  (+ (* board-max y) x))))
 
   ;; method to return flat list of all tiles
   (define (get-all-tiles) tiles)
@@ -91,20 +100,62 @@
   ;; representing success or failure and a reference to any piece
   ;; removed from the board because of this move.
   (define (move-piece orig-tile dest-tile)
-    (let ((orig-piece ((orig-tile 'get-piece)))
-          (dest-piece ((dest-tile 'get-piece))))
+    
+    ;; Fail loudly if either tile is null
+    (cond ((null? orig-tile) (error "Invalid orig-tile"))
+          ((null? dest-tile) (error "Invalid dest-tile"))
+          (else
 
-      (if (null? orig-piece)
-          (make-move-result "origin tile empty - move aborted" '())
+           ;; Store references to the pieces on each tile
+           (let ((orig-piece ((orig-tile 'get-piece)))
+                 (dest-piece ((dest-tile 'get-piece))))
 
-          (let ((valid-moves ((orig-piece 'get-valid-moves) dispatch)))
-            (if (not (eq? #f (member dest-tile valid-moves)))
-                (begin
-                  (call dest-tile 'set-piece orig-piece)
-                  (call orig-piece 'set-tile dest-tile)
-                  (call orig-tile 'set-piece '())
-                  (make-move-result "Successfully moved piece" dest-piece))
-                (make-move-result "Selection was not valid - move aborted" '()))))))
+             ;; Return failure if you tried to move from an empty tile
+             (if (null? orig-piece)
+                 (make-move-result "Origin tile empty - move aborted" '())
+
+                 ;; Otherwise check for validity of move
+                 (let ((valid-moves ((orig-piece 'get-valid-moves) dispatch)))
+                   (if (not (eq? #f (member dest-tile valid-moves)))
+                       ;; If move is valid, perform move
+                       (begin
+                         (call dest-tile 'set-piece orig-piece)
+                         (call orig-piece 'set-tile dest-tile)
+                         (call orig-tile 'set-piece '())
+                         (make-move-result "Successfully moved piece" dest-piece))
+
+                       ;; Else return failure
+                       (make-move-result "Selection was not valid - move aborted" '()))))))))
+
+  ;; Forces a piece to move from orig-tile to dest-tile.
+  ;; !!! This method is primarily meant for debug purposes !!!
+  ;; It does not check for the validity of the move being
+  ;; made. Similarly to move-piece, force-move-piece should
+  ;; never error, but rather returns a data structure representing
+  ;; the result of hte move, including a string representing success
+  ;; or failure and a reference to any piece removed from the board
+  ;; because of this move.
+  (define (force-move-piece orig-tile dest-tile)
+
+    ;; Fail loudly if either tile is null
+    (cond ((null? orig-tile) (error "Invalid orig-tile"))
+          ((null? dest-tile) (error "Invalid dest-tile"))
+          (else
+
+           ;; Store reference to the pieces on each tile
+           (let ((orig-piece (call orig-tile 'get-piece))
+                 (dest-piece (call dest-tile 'get-piece)))
+
+             ;; Return failure if you tried to move from an empty tile
+             (if (null? orig-piece)
+                 (make-move-result "Origin tile empty - move aborted" '())
+
+                 ;; Otherwise perform move
+                 (begin
+                   (call dest-tile 'set-piece orig-piece)
+                   (call orig-piece 'set-tile dest-tile)
+                   (call orig-tile 'set-piece '())
+                   (make-move-result "Force-moved piece" dest-piece)))))))
 
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)
@@ -124,6 +175,7 @@
           ((eq? msg 'get-all-tiles) get-all-tiles)
           ((eq? msg 'draw) draw)
           ((eq? msg 'move-piece) move-piece)
+          ((eq? msg 'force-move-piece) force-move-piece)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
