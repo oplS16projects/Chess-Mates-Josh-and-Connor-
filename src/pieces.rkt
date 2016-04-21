@@ -64,10 +64,9 @@
           (else (error "Unrecognized method for" (get-type) ': msg)))))
 
 
-;;
-;; NOTE: these classes are very bare-bones atm, all they can do is draw
-;; themselves and call methods inhereted from their base classes.
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PIECE IMPLEMENTATIONS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; PAWN
 (define (make-pawn team tile)
@@ -76,13 +75,7 @@
   (define (draw) 'P)
 
   (define (get-white-moves board)
-    (let ((x-pos ((tile 'get-x)))
-          (y-pos ((tile 'get-y))))
-      (let ((next-y (- y-pos 1)))
-
-        (if (< next-y 0)
-            '()
-            (list ((board 'tile-at) x-pos next-y))))))
+    '())
 
   ; get valid moves for black piece
   (define (get-black-moves board)
@@ -117,6 +110,14 @@
               (set! moves (cons t moves))
               void))
 
+        ; check down-and-right tile for enemy piece to capture
+        (let ((t (call board 'tile-at (+ x 1) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (eq? (call (call t 'get-piece) 'get-team) white-team))
+              (set! moves (cons t moves))
+              void))
+
         moves)))
 
   (define (get-valid-moves board)
@@ -124,9 +125,15 @@
         (get-white-moves board)
         (get-black-moves board)))
 
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_Pawn.png"
+        "../Images/Black_Pawn.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
           ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
 
 ;; ROOK
@@ -135,8 +142,18 @@
 
   (define (draw) 'R)
 
+  (define (get-valid-moves)
+    '())
+
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_Rook.png"
+        "../Images/Black_Rook.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
 
 ;; BISHOP
@@ -145,8 +162,18 @@
 
   (define (draw) 'B)
 
+  (define (get-valid-moves)
+    '())
+
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_Bishop.png"
+        "../Images/Black_Bishop.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
 
 ;; KNIGHT
@@ -155,8 +182,18 @@
 
   (define (draw) 'T)
 
+  (define (get-valid-moves)
+    '())
+
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_Knight.png"
+        "../Images/Black_Knight.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
 
 ;; KING
@@ -165,8 +202,18 @@
 
   (define (draw) 'K)
 
+    (define (get-valid-moves)
+    '())
+
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_King.png"
+        "../Images/Black_King.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
 
 ;; QUEEN
@@ -175,6 +222,16 @@
 
   (define (draw) 'Q)
 
+  (define (get-valid-moves)
+    '())
+
+  (define (get-sprite)
+    (if (eq? (call base 'get-team) white-team)
+        "../Images/White_Queen.png"
+        "../Images/Black_Queen.png"))
+
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
+          ((eq? msg 'get-valid-moves) get-valid-moves)
+          ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
