@@ -9,7 +9,6 @@
 
 
 ;Starting board.  Can change the cons with 'B or 'W and 'piece.
-;This is just a general 
 (define initialBoard
   (list (list 
          (cons 'B 'rook) (cons 'B 'knight) (cons 'B 'bishop) (cons 'B 'queen) (cons 'B 'king) (cons 'B 'bishop) (cons 'B 'knight) (cons 'B 'rook))
