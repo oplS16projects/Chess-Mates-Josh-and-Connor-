@@ -21,6 +21,8 @@
   ;; piece member variable
   (define piece '())
 
+  (define (is-empty) (null? piece))
+
   ;; getter method for X coord
   (define (get-x) x)
 
@@ -47,6 +49,7 @@
     (cond ((eq? msg 'get-x) get-x)
           ((eq? msg 'get-y) get-y)
           ((eq? msg 'get-piece) get-piece)
+          ((eq? msg 'is-empty) is-empty)
           ((eq? msg 'set-piece) set-piece)
           ((eq? msg 'draw) draw)
           (else (error msg "Invalid method for TILE")))))

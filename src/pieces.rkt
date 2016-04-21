@@ -10,6 +10,7 @@
 
 (require "teams.rkt")
 (require "tile.rkt")
+(require "call.rkt")
 
 (provide
  pawn% rook% bishop% knight% king% queen%
@@ -83,8 +84,40 @@
             '()
             (list ((board 'tile-at) x-pos next-y))))))
 
+  ; get valid moves for black piece
   (define (get-black-moves board)
-    2)
+    ; moves default to null
+    (define moves '())
+
+    ; capture refs to X/Y coords
+    (let ((x (call (call base 'get-tile) 'get-x))
+          (y (call (call base 'get-tile) 'get-y)))
+
+      ; begin accumulating moves
+      (begin
+        
+        ; if y-pos = 1, then piece hasn't moved and allow double move
+        (if (and (= y 1)
+                 (call (call board 'tile-at x (+ y 1)) 'is-empty)
+                 (call (call board 'tile-at x (+ y 2)) 'is-empty))
+            (set! moves (cons (call board 'tile-at x (+ y 2)) moves))
+            void)
+        
+        ; check standard 1-space move
+        (if (and (not (null? (call board 'tile-at x (+ y 1))))
+                 (call (call board 'tile-at x (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at x (+ y 1)) moves))
+            void)
+
+        ; check down-and-left tile for enemy piece to capture
+        (let ((t (call board 'tile-at (- x 1) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (eq? (call (call t 'get-piece) 'get-team) white-team))
+              (set! moves (cons t moves))
+              void))
+
+        moves)))
 
   (define (get-valid-moves board)
     (if (eq? ((base 'get-team)) white-team)
