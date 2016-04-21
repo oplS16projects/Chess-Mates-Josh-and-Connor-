@@ -1,7 +1,5 @@
 #lang racket
-(require graphics/graphics)
-(open-graphics)
-(require racket/list)
+
 (include "board.rkt")
 (include "pieces.rkt")
 (include "teams.rkt")
@@ -20,6 +18,3 @@
 (define length1 (* vert img-length))
 (define player "")
 (define trash "")
-
-;make a tile a certain color if a piece can move there?
-(define possible-moves-color (make-rgb (/ 93 255) (/ 237 255) (/ 71 255)))
