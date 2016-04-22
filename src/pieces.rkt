@@ -73,109 +73,68 @@
 (define (make-pawn team tile)
   (define base (make-piece-impl pawn% team tile))
 
+  (define start-y (call (call base 'get-tile) 'get-y))
+
   (define (draw) 'P)
-
-  (define (get-white-moves board)
-        ; moves default to null
-    (define moves '())
-
-    ; capture refs to X/Y coords
-    (let ((x (call (call base 'get-tile) 'get-x))
-          (y (call (call base 'get-tile) 'get-y)))
-
-      ; begin accumulating moves
-      (begin
-        
-        ; if y-pos = 6, then piece hasn't moved and allow double move
-        (if (and (= y 6)
-                 (call (call board 'tile-at x (- y 1)) 'is-empty)
-                 (call (call board 'tile-at x (- y 2)) 'is-empty))
-            (set! moves (cons (call board 'tile-at x (- y 2)) moves))
-            void)
-        
-        ; check standard 1-space move
-        (if (and (not (null? (call board 'tile-at x (- y 1))))
-                 (call (call board 'tile-at x (- y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at x (- y 1)) moves))
-            void)
-
-        ; check up-and-right tile for enemy piece to capture
-        (let ((t (call board 'tile-at (+ x 1) (- y 1))))
-          (if (and (not (null? t))
-                   (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) black-team))
-              (set! moves (cons t moves))
-              void))
-
-        ; check up-and-left tile for enemy piece to capture
-        (let ((t (call board 'tile-at (- x 1) (- y 1))))
-          (if (and (not (null? t))
-                   (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) black-team))
-              (set! moves (cons t moves))
-              void))
-
-        moves)))
-
   
-  ; get valid moves for black piece
-  (define (get-black-moves board)
-    ; moves default to null
-    (define moves '())
-
-    ; capture refs to X/Y coords
-    (let ((x (call (call base 'get-tile) 'get-x))
-          (y (call (call base 'get-tile) 'get-y)))
-
-      ; begin accumulating moves
-      (begin
-        
-        ; if y-pos = 1, then piece hasn't moved and allow double move
-        (if (and (= y 1)
-                 (call (call board 'tile-at x (+ y 1)) 'is-empty)
-                 (call (call board 'tile-at x (+ y 2)) 'is-empty))
-            (set! moves (cons (call board 'tile-at x (+ y 2)) moves))
-            void)
-        
-        ; check standard 1-space move
-        (if (and (not (null? (call board 'tile-at x (+ y 1))))
-                 (call (call board 'tile-at x (+ y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at x (+ y 1)) moves))
-            void)
-
-        ; check down-and-left tile for enemy piece to capture
-        (let ((t (call board 'tile-at (- x 1) (+ y 1))))
-          (if (and (not (null? t))
-                   (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) white-team))
-              (set! moves (cons t moves))
-              void))
-
-        ; check down-and-right tile for enemy piece to capture
-        (let ((t (call board 'tile-at (+ x 1) (+ y 1))))
-          (if (and (not (null? t))
-                   (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) white-team))
-              (set! moves (cons t moves))
-              void))
-
-        moves)))
-
   (define (get-valid-moves board)
-    (if (eq? ((base 'get-team)) white-team)
-        (get-white-moves board)
-        (get-black-moves board)))
 
+    ; helper method takes 'op' argument representing direction of movement
+    (define (helper op)
+      ; moves default to null
+      ; also capture refs to x/y coords
+      (let ((moves '())
+            (x (call (call base 'get-tile) 'get-x))
+            (y (call (call base 'get-tile) 'get-y)))
+        
+        ; begin accumulating moves
+        (begin
+          
+          ; if y-pos = start-pos, then piece hasn't moved and allow double move
+          (if (and (= y start-y)
+                   (call (call board 'tile-at x (op y 1)) 'is-empty)
+                   (call (call board 'tile-at x (op y 2)) 'is-empty))
+              (set! moves (cons (call board 'tile-at x (op y 2)) moves))
+              void)
+          
+          ; check standard 1-space move
+          (if (and (not (null? (call board 'tile-at x (op y 1))))
+                   (call (call board 'tile-at x (op y 1)) 'is-empty))
+              (set! moves (cons (call board 'tile-at x (op y 1)) moves))
+              void)
+          
+          ; check diagonal-right tile for enemy piece to capture
+          (let ((t (call board 'tile-at (+ x 1) (op y 1))))
+            (if (and (not (null? t))
+                     (not (call t 'is-empty))
+                     (not (eq? (call (call t 'get-piece) 'get-team) (call base 'get-team))))
+                (set! moves (cons t moves))
+                void))
+          
+          ; check diagonal-left tile for enemy piece to capture
+          (let ((t (call board 'tile-at (- x 1) (op y 1))))
+            (if (and (not (null? t))
+                     (not (call t 'is-empty))
+                     (not (eq? (call (call t 'get-piece) 'get-team) (call base 'get-team))))
+                (set! moves (cons t moves))
+                void))
+          
+          moves)))
+
+    ; call helper method with + or - based on team color
+    (helper (if (eq? (call base 'get-team) white-team) - +)))
+  
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
         "../Images/White_Pawn.png"
         "../Images/Black_Pawn.png"))
-
+  
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
           ((eq? msg 'get-valid-moves) get-valid-moves)
           ((eq? msg 'get-sprite) get-sprite)
           (else (base msg)))))
+  
 
 ;; ROOK
 (define (make-rook team tile)
