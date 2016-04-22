@@ -11,9 +11,13 @@
 ;; coordinates on the board, the chess piece on it (if
 ;; any), and the board owning the tile.
 
+(require "call.rkt")
 
-;; make-tile is the only public function in this module
-(provide make-tile)
+
+;; public procedures
+(provide
+ make-tile
+ print-tiles)
 
 ;; constructor for "tile" class
 (define (make-tile x y)
@@ -53,3 +57,17 @@
           ((eq? msg 'set-piece) set-piece)
           ((eq? msg 'draw) draw)
           (else (error msg "Invalid method for TILE")))))
+
+;; Debug function for displaying a list of tiles
+(define (print-tiles lst)
+  (if (null? lst)
+      (display "")
+      (let ((t (car lst)))
+        (begin
+          (display "(")
+          (display (call t 'get-x))
+          (display ",")
+          (display (call t 'get-y))
+          (display ")")
+          (display ", ")
+          (print-tiles (cdr lst))))))
