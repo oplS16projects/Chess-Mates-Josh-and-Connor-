@@ -102,6 +102,9 @@ Basic, unoptimized path finding functions for pieces.
 **Josh:**
 Having Conor's code work with mine.  On-click and on-key working and functioning.  Maybe an on-mouse-over to know where the mouse is and act accordingly.
 
+**Update 4/22:**
+The GUI part of this project is going to require more work than expected, so together we finished up all the movements of the pieces.  Each piece moves correctly depending on which piece it is.  This is a huge accomplishment, given that almost all the backend work is wrapped up and ready to go.  Some optimization may be configured later on next week.  Once the GUI part is up, our project is nearly complete.  
+
 ### Final Presentation (last week of semester)
 Polishing off code.  Castling and detection of checks and checkmates.  Working on green colored tiles to indicate proper moves.  Making sure everything works together, and bug fixing.  In depth testing.  BUG FIXING!  BUG FIXING!
 ## Group Responsibilities
