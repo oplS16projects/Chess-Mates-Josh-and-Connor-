@@ -239,52 +239,52 @@
       ; begin accumulating moves
       (begin
 
-               ; move down 3 left 1
-        (if (and (not (null? (call board 'tile-at (- x 1) (+ y 3))))
-                 (call (call board 'tile-at (- x 1) (+ y 3)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (- x 1) (+ y 3)) moves))
+               ; move down 2 left 1
+        (if (and (not (null? (call board 'tile-at (- x 1) (+ y 2))))
+                 (call (call board 'tile-at (- x 1) (+ y 2)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 1) (+ y 2)) moves))
             void)
 
-               ; move down 3 right 1
-        (if (and (not (null? (call board 'tile-at (+ x 1) (+ y 3))))
-                 (call (call board 'tile-at (+ x 1) (+ y 3)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (+ x 1) (+ y 3)) moves))
+               ; move down 2 right 1
+        (if (and (not (null? (call board 'tile-at (+ x 1) (+ y 2))))
+                 (call (call board 'tile-at (+ x 1) (+ y 2)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 1) (+ y 2)) moves))
             void)
 
-               ; move up 3 left 1
-        (if (and (not (null? (call board 'tile-at (- x 1) (- y 3))))
-                 (call (call board 'tile-at (- x 1) (- y 3)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (- x 1) (- y 3)) moves))
+               ; move up 2 left 1
+        (if (and (not (null? (call board 'tile-at (- x 1) (- y 2))))
+                 (call (call board 'tile-at (- x 1) (- y 2)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 1) (- y 2)) moves))
             void)
         
-               ; move up 3 right 1
-        (if (and (not (null? (call board 'tile-at (+ x 1) (- y 3))))
-                 (call (call board 'tile-at (+ x 1) (- y 3)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (+ x 1) (- y 3)) moves))
+               ; move up 2 right 1
+        (if (and (not (null? (call board 'tile-at (+ x 1) (- y 2))))
+                 (call (call board 'tile-at (+ x 1) (- y 2)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 1) (- y 2)) moves))
             void)
 
-              ; move left 3 up 1
-        (if (and (not (null? (call board 'tile-at (- x 3) (- y 1))))
-                 (call (call board 'tile-at (- x 3) (- y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (- x 3) (- y 1)) moves))
+              ; move left 2 up 1
+        (if (and (not (null? (call board 'tile-at (- x 2) (- y 1))))
+                 (call (call board 'tile-at (- x 2) (- y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 2) (- y 1)) moves))
             void)
 
-              ; move left 3 down 1
-        (if (and (not (null? (call board 'tile-at (- x 3) (+ y 1))))
-                 (call (call board 'tile-at (- x 3) (+ y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (- x 3) (+ y 1)) moves))
+              ; move left 2 down 1
+        (if (and (not (null? (call board 'tile-at (- x 2) (+ y 1))))
+                 (call (call board 'tile-at (- x 2) (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 2) (+ y 1)) moves))
             void)
 
-               ; move right 3 up 1
-        (if (and (not (null? (call board 'tile-at (+ x 3) (- y 1))))
-                 (call (call board 'tile-at (+ x 3) (- y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (+ x 3) (- y 1)) moves))
+               ; move right 2 up 1
+        (if (and (not (null? (call board 'tile-at (+ x 2) (- y 1))))
+                 (call (call board 'tile-at (+ x 2) (- y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 2) (- y 1)) moves))
             void)
 
-               ; move right 3 down 1
-        (if (and (not (null? (call board 'tile-at (+ x 3) (+ y 1))))
-                 (call (call board 'tile-at (+ x 3) (+ y 1)) 'is-empty))
-            (set! moves (cons (call board 'tile-at (+ x 3) (+ y 1)) moves))
+               ; move right 2 down 1
+        (if (and (not (null? (call board 'tile-at (+ x 2) (+ y 1))))
+                 (call (call board 'tile-at (+ x 2) (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 2) (+ y 1)) moves))
             void))))
 
   (define (get-sprite)
