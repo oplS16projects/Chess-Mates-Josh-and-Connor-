@@ -1,4 +1,4 @@
-# Josh Blanchett & Conor Finegan
+# Josh Blanchette & Conor Finegan
 
 # ChessNuts: The People's Chess Simulator
 
