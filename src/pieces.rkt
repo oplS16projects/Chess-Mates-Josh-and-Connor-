@@ -11,6 +11,7 @@
 (require "teams.rkt")
 (require "tile.rkt")
 (require "call.rkt")
+(require "accum-tiles.rkt")
 
 (provide
  pawn% rook% bishop% knight% king% queen%
@@ -185,8 +186,10 @@
 
   (define (draw) 'R)
 
-  (define (get-valid-moves)
-    '())
+  (define (get-valid-moves board)
+    (accum-straight-tiles board
+                          (call base 'get-tile)
+                          (call base 'get-team)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -205,8 +208,11 @@
 
   (define (draw) 'B)
 
-  (define (get-valid-moves)
-    '())
+  (define (get-valid-moves board)
+    (accum-diagonal-tiles board
+                          (call base 'get-tile)
+                          (call base 'get-team)))
+                          
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -225,7 +231,7 @@
 
   (define (draw) 'T)
   
-  (define (get-valid-moves)
+  (define (get-valid-moves board)
     '())
 
   (define (get-sprite)
@@ -245,7 +251,7 @@
 
   (define (draw) 'K)
 
-  (define (get-valid-moves)
+  (define (get-valid-moves board)
     '())
 
   (define (get-sprite)
@@ -265,10 +271,12 @@
 
   (define (draw) 'Q)
 
-  (define (get-valid-moves)
-    ;Queen can run a check with make-rook and make-bishop
-    ;This will make it much easier to implement
-    '())
+  (define (get-valid-moves board)
+    (let ((tl (call base 'get-tile))
+          (tm (call base 'get-team)))
+      (flatten
+       (list (accum-straight-tiles board tl tm)
+             (accum-diagonal-tiles board tl tm)))))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
