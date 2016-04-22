@@ -185,16 +185,8 @@
 
   (define (draw) 'R)
 
-  (define (get-white-moves board)
+  (define (get-valid-moves)
     '())
-
-  (define (get-black-moves board)
-    '())
-
-  (define (get-valid-moves board)
-    (if (eq? ((base 'get-team)) white-team)
-        (get-white-moves board)
-        (get-black-moves board)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -213,16 +205,8 @@
 
   (define (draw) 'B)
 
-  (define (get-white-moves board)
+  (define (get-valid-moves)
     '())
-
-  (define (get-black-moves board)
-    '())
-
-  (define (get-valid-moves board)
-    (if (eq? ((base 'get-team)) white-team)
-        (get-white-moves board)
-        (get-black-moves board)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -240,17 +224,9 @@
   (define base (make-piece-impl knight% team tile))
 
   (define (draw) 'T)
-
-  (define (get-white-moves board)
-    '())
-
-  (define (get-black-moves board)
-    '())
   
-  (define (get-valid-moves board)
-    (if (eq? ((base 'get-team)) white-team)
-        (get-white-moves board)
-        (get-black-moves board)))
+  (define (get-valid-moves)
+    '())
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -268,17 +244,9 @@
   (define base (make-piece-impl king% team tile))
 
   (define (draw) 'K)
-  
-  (define (get-white-moves board)
-    '())
 
-  (define (get-black-moves board)
+  (define (get-valid-moves)
     '())
-  
-  (define (get-valid-moves board)
-    (if (eq? ((base 'get-team)) white-team)
-        (get-white-moves board)
-        (get-black-moves board)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -297,13 +265,7 @@
 
   (define (draw) 'Q)
 
-  (define (get-white-moves board)
-    '())
-
-  (define (get-black-moves board)
-    '())
-
-  (define (get-valid-moves board)
+  (define (get-valid-moves)
     ;Queen can run a check with make-rook and make-bishop
     ;This will make it much easier to implement
     '())
