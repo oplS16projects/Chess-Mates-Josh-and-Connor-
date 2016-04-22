@@ -105,7 +105,7 @@
         (let ((t (call board 'tile-at (+ x 1) (- y 1))))
           (if (and (not (null? t))
                    (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) white-team))
+                   (eq? (call (call t 'get-piece) 'get-team) black-team))
               (set! moves (cons t moves))
               void))
 
@@ -113,7 +113,7 @@
         (let ((t (call board 'tile-at (- x 1) (- y 1))))
           (if (and (not (null? t))
                    (not (call t 'is-empty))
-                   (eq? (call (call t 'get-piece) 'get-team) white-team))
+                   (eq? (call (call t 'get-piece) 'get-team) black-team))
               (set! moves (cons t moves))
               void))
 
