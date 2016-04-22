@@ -203,48 +203,114 @@
                  (call (call board 'tile-at (- x 1) (+ y 2)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 1) (+ y 2)) moves))
             void)
+            
+               ; move down 2 left 1 capture
+        (let ((t (call board 'tile-at (- x 1) (+ y 2))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
                ; move down 2 right 1
         (if (and (not (null? (call board 'tile-at (+ x 1) (+ y 2))))
                  (call (call board 'tile-at (+ x 1) (+ y 2)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 1) (+ y 2)) moves))
             void)
+            
+                ; move down 2 right 1 capture
+        (let ((t (call board 'tile-at (+ x 1) (+ y 2))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
                ; move up 2 left 1
         (if (and (not (null? (call board 'tile-at (- x 1) (- y 2))))
                  (call (call board 'tile-at (- x 1) (- y 2)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 1) (- y 2)) moves))
             void)
+            
+               ; move up 2 left 1 capture
+        (let ((t (call board 'tile-at (- x 1) (- y 2))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
         
                ; move up 2 right 1
         (if (and (not (null? (call board 'tile-at (+ x 1) (- y 2))))
                  (call (call board 'tile-at (+ x 1) (- y 2)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 1) (- y 2)) moves))
             void)
+            
+               ; move up 2 right 1 capture
+        (let ((t (call board 'tile-at (+ x 1) (- y 2))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
               ; move left 2 up 1
         (if (and (not (null? (call board 'tile-at (- x 2) (- y 1))))
                  (call (call board 'tile-at (- x 2) (- y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 2) (- y 1)) moves))
             void)
+            
+              ; move left 2 up 1 capture
+        (let ((t (call board 'tile-at (- x 2) (- y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
               ; move left 2 down 1
         (if (and (not (null? (call board 'tile-at (- x 2) (+ y 1))))
                  (call (call board 'tile-at (- x 2) (+ y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 2) (+ y 1)) moves))
             void)
+            
+              ; move left 2 down 1 capture
+        (let ((t (call board 'tile-at (- x 2) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
                ; move right 2 up 1
         (if (and (not (null? (call board 'tile-at (+ x 2) (- y 1))))
                  (call (call board 'tile-at (+ x 2) (- y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 2) (- y 1)) moves))
             void)
+            
+              ; move right 2 up 1 capture
+        (let ((t (call board 'tile-at (+ x 2) (- y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
                ; move right 2 down 1
         (if (and (not (null? (call board 'tile-at (+ x 2) (+ y 1))))
                  (call (call board 'tile-at (+ x 2) (+ y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 2) (+ y 1)) moves))
-            void))))
+            void)
+            
+               ; move right 2 down 1 capture
+        (let ((t (call board 'tile-at (+ x 2) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+        
+        moves)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
@@ -280,43 +346,114 @@
                  (call (call board 'tile-at x (+ y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at x (+ y 1)) moves))
             void)
+            
+               ; move down capture
+        (let ((t (call board 'tile-at x (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
                 ; move left
         (if (and (not (null? (call board 'tile-at (- x 1) y)))
                  (call (call board 'tile-at (- x 1) y) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 1) y) moves))
             void)
+            
+               ; move left capture
+        (let ((t (call board 'tile-at (- x 1) y)))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+              
                 ; move up
         (if (and (not (null? (call board 'tile-at x (- y 1))))
                  (call (call board 'tile-at x (- y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at x (- y 1)) moves))
             void)
+            
+               ; move up capture
+        (let ((t (call board 'tile-at x (- y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+              
                 ; move right
         (if (and (not (null? (call board 'tile-at (+ x 1) y)))
                  (call (call board 'tile-at (+ x 1) y) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 1) y) moves))
             void)
+            
+               ; move right capture
+        (let ((t (call board 'tile-at (+ x 1) y)))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
 
-                ; down right move
+                ; move down right 
         (if (and (not (null? (call board 'tile-at (+ x 1) (+ y 1))))
                  (call (call board 'tile-at (+ x 1) (+ y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 1) (+ y 1)) moves))
             void)
-                ; up left move
+            
+                ; move down right capture
+        (let ((t (call board 'tile-at (+ x 1) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+              
+                ; move up left
         (if (and (not (null? (call board 'tile-at (- x 1) (- y 1))))
                  (call (call board 'tile-at (- x 1) (- y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 1) (- y 1)) moves))
             void)
-                ; down left move
+            
+                ; move up left capture
+        (let ((t (call board 'tile-at (- x 1) (- y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+            
+                ; move down left
         (if (and (not (null? (call board 'tile-at (- x 1) (+ y 1))))
                  (call (call board 'tile-at (- x 1) (+ y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (- x 1) (+ y 1)) moves))
             void)
-                ; up right move
+            
+                ; move down left capture
+        (let ((t (call board 'tile-at (- x 1) (+ y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+            
+                ; move up right
         (if (and (not (null? (call board 'tile-at (+ x 1) (- y 1))))
                  (call (call board 'tile-at (+ x 1) (- y 1)) 'is-empty))
             (set! moves (cons (call board 'tile-at (+ x 1) (- y 1)) moves))
-            void))))
+            void)
+            
+                ; move up right capture
+        (let ((t (call board 'tile-at (+ x 1) (- y 1))))
+          (if (and (not (null? t))
+                   (not (call t 'is-empty))
+                   (not (eq? (call (call t 'get-piece) 'get-team) 'get-team)))
+              (set! moves (cons t moves))
+              void))
+              
+        moves)))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
