@@ -75,9 +75,6 @@
 
   (define (draw) 'P)
 
-  ;JB-Tested get-white-moves on 4/21.  Everything checks out.
-  ;Captures pieces and then the piece disappears.  Which is a start
-  
   (define (get-white-moves board)
         ; moves default to null
     (define moves '())
@@ -252,7 +249,59 @@
   (define (draw) 'K)
 
   (define (get-valid-moves board)
-    '())
+
+    ; moves default to null....might not need
+    (define moves '())
+
+    ; capture refs to X/Y coords....also might not need
+    (let ((x (call (call base 'get-tile) 'get-x))
+          (y (call (call base 'get-tile) 'get-y)))
+
+      ; begin accumulating moves
+      (begin
+
+               ; move down
+        (if (and (not (null? (call board 'tile-at x (+ y 1))))
+                 (call (call board 'tile-at x (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at x (+ y 1)) moves))
+            void)
+
+                ; move left
+        (if (and (not (null? (call board 'tile-at (- x 1) y)))
+                 (call (call board 'tile-at (- x 1) y) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 1) y) moves))
+            void)
+                ; move up
+        (if (and (not (null? (call board 'tile-at x (- y 1))))
+                 (call (call board 'tile-at x (- y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at x (- y 1)) moves))
+            void)
+                ; move right
+        (if (and (not (null? (call board 'tile-at (+ x 1) y)))
+                 (call (call board 'tile-at (+ x 1) y) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 1) y) moves))
+            void)
+
+                ; down right move
+        (if (and (not (null? (call board 'tile-at (+ x 1) (+ y 1))))
+                 (call (call board 'tile-at (+ x 1) (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 1) (+ y 1)) moves))
+            void)
+                ; up left move
+        (if (and (not (null? (call board 'tile-at (- x 1) (- y 1))))
+                 (call (call board 'tile-at (- x 1) (- y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 1) (- y 1)) moves))
+            void)
+                ; down left move
+        (if (and (not (null? (call board 'tile-at (- x 1) (+ y 1))))
+                 (call (call board 'tile-at (- x 1) (+ y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (- x 1) (+ y 1)) moves))
+            void)
+                ; up right move
+        (if (and (not (null? (call board 'tile-at (+ x 1) (- y 1))))
+                 (call (call board 'tile-at (+ x 1) (- y 1)) 'is-empty))
+            (set! moves (cons (call board 'tile-at (+ x 1) (- y 1)) moves))
+            void))))
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
