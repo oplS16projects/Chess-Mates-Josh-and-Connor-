@@ -13,7 +13,6 @@
 
 (require "call.rkt")
 
-
 ;; public procedures
 (provide
  make-tile
