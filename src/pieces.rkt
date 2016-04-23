@@ -12,6 +12,7 @@
 (require "tile.rkt")
 (require "call.rkt")
 (require "accum-tiles.rkt")
+(require "piece-sprites.rkt")
 
 (provide
  pawn% rook% bishop% knight% king% queen%
@@ -126,8 +127,8 @@
   
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_Pawn.png"
-        "../Images/Black_Pawn.png"))
+        white-pawn-bmp
+        black-pawn-bmp))
   
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
@@ -149,8 +150,8 @@
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_Rook.png"
-        "../Images/Black_Rook.png"))
+        white-rook-bmp
+        black-rook-bmp))
 
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
@@ -172,8 +173,8 @@
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_Bishop.png"
-        "../Images/Black_Bishop.png"))
+        white-bishop-bmp
+        black-bishop-bmp))
 
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
@@ -314,8 +315,8 @@
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_Knight.png"
-        "../Images/Black_Knight.png"))
+        white-knight-bmp
+        black-knight-bmp))
 
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
@@ -457,8 +458,8 @@
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_King.png"
-        "../Images/Black_King.png"))
+        white-king-bmp
+        black-king-bmp))
 
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
@@ -481,8 +482,8 @@
 
   (define (get-sprite)
     (if (eq? (call base 'get-team) white-team)
-        "../Images/White_Queen.png"
-        "../Images/Black_Queen.png"))
+        white-queen-bmp
+        black-queen-bmp))
 
   (λ (msg)
     (cond ((eq? msg 'draw) draw)
