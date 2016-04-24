@@ -61,7 +61,7 @@
           (print (move-result-desc result))
           (set! selected-tile '())
           (process-captured-piece (move-result-piece result))
-          (swap-turns))))
+          (if (move-result-success? result) (swap-turns) void))))
 
     ; for now only delcares a winner, doesn't do anyting else 
     (define (process-captured-piece piece)

@@ -16,13 +16,17 @@
 (provide
  make-move-result
  move-result-desc
- move-result-piece)
+ move-result-piece
+ move-result-success?)
 
-(define (make-move-result desc piece)
-  (cons desc piece))
+(define (make-move-result desc piece success)
+  (cons desc (cons piece success)))
 
 (define (move-result-desc mr)
   (car mr))
 
 (define (move-result-piece mr)
-  (cdr mr))
+  (car (cdr mr)))
+
+(define (move-result-success? mr)
+  (cdr (cdr mr)))

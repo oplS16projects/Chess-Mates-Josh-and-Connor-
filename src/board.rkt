@@ -112,7 +112,7 @@
 
              ;; Return failure if you tried to move from an empty tile
              (if (null? orig-piece)
-                 (make-move-result "Origin tile empty - move aborted" '())
+                 (make-move-result "Origin tile empty - move aborted" '() #f)
 
                  ;; Otherwise check for validity of move
                  (let ((valid-moves ((orig-piece 'get-valid-moves) dispatch)))
@@ -122,10 +122,10 @@
                          (call dest-tile 'set-piece orig-piece)
                          (call orig-piece 'set-tile dest-tile)
                          (call orig-tile 'set-piece '())
-                         (make-move-result "Successfully moved piece" dest-piece))
+                         (make-move-result "Successfully moved piece" dest-piece #t))
 
                        ;; Else return failure
-                       (make-move-result "Selection was not valid - move aborted" '()))))))))
+                       (make-move-result "Selection was not valid - move aborted" '() #f))))))))
 
   ;; Forces a piece to move from orig-tile to dest-tile.
   ;; !!! This method is primarily meant for debug purposes !!!
@@ -148,14 +148,14 @@
 
              ;; Return failure if you tried to move from an empty tile
              (if (null? orig-piece)
-                 (make-move-result "Origin tile empty - move aborted" '())
+                 (make-move-result "Origin tile empty - move aborted" '() #f)
 
                  ;; Otherwise perform move
                  (begin
                    (call dest-tile 'set-piece orig-piece)
                    (call orig-piece 'set-tile dest-tile)
                    (call orig-tile 'set-piece '())
-                   (make-move-result "Force-moved piece" dest-piece)))))))
+                   (make-move-result "Force-moved piece" dest-piece #t)))))))
 
   ;; helper method, draws tile at given X/Y
   (define (draw-tile x y)
