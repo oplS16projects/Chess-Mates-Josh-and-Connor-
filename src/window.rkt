@@ -90,8 +90,8 @@
   (define (draw-piece piece dc x y)
     (send dc draw-bitmap
           (call piece 'get-sprite)
-          (+ (* tile-bmp-size x) 18)
-          (+ (* tile-bmp-size y) 18)))
+          (+ (* tile-bmp-size x) 0)
+          (+ (* tile-bmp-size y) 0)))
 
   ; creates the board-canvas inside frame
   (new board-canvas%
