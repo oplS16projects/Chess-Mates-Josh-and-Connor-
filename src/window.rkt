@@ -32,7 +32,7 @@
     (new frame%
          (label "ChessNuts")
          (width 600)
-         (height 700)
+         (height 600)
          (style (list 'no-resize-border))))
   
   ; panel for user controls and output text
