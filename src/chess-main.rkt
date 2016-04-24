@@ -93,5 +93,4 @@
     ; window's output message
     (set! print (create-window board on-mouse-click on-mouse-over))))
 
-; debug
-;(main)
+(main)
