@@ -26,7 +26,7 @@
          board
          start-tile
          team)
-
+  
   (define (iter tile out-lst)
     (cond
       ; if tile is null or same team, return current list
@@ -34,19 +34,19 @@
            (and (not (call tile 'is-empty))
                 (eq? team (call (call tile 'get-piece) 'get-team))))
        out-lst)
-
+      
       ; if tile contains enemy piece, return current list + current tile
       ((and (not (call tile 'is-empty))
-           (not (eq? team (call (call tile 'get-piece) 'get-team))))
+            (not (eq? team (call (call tile 'get-piece) 'get-team))))
        (cons tile out-lst))
-
+      
       ; otherwise store current tile and make recursive call
       (else
        (let ((x (call tile 'get-x))
              (y (call tile 'get-y)))
          (iter (call board 'tile-at (x-transform x) (y-transform y))
                (cons tile out-lst))))))
-
+  
   ; baseline call to iter, starts with
   ; a transform because the start tile
   ; is not considered to be a valid move
