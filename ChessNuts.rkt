@@ -4,4 +4,4 @@
 
 (require "src/chess-main.rkt")
 
-(main)
+;(main)
