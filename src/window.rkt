@@ -17,9 +17,10 @@
 (provide create-window)
 
 (define (create-window
-         board
+         board 
          mouse-click-proc ; needs to take 2 params (tile-x, tile-y)
          mouse-over-proc  ; needs to take 2 params (tile-x, tile-y)
+         ; paint-proc ; λ (canvas dc)
          )
 
   ; constant for tile dimension (75x75)
