@@ -24,8 +24,6 @@
 
   ; constant for tile dimension (75x75)
   (define tile-bmp-size 75)
-
-  (define selected-tile '())
   
   ; top-level window
   (define frame
@@ -83,7 +81,7 @@
              (if (not (call tile 'is-empty))
                  (draw-piece (call tile 'get-piece) dc x y)
                  void))))
-       
+
        (call board 'get-all-tiles))))
   
   ; method to draw an individual piece
