@@ -176,6 +176,7 @@
           ((eq? msg 'draw) draw)
           ((eq? msg 'move-piece) move-piece)
           ((eq? msg 'force-move-piece) force-move-piece)
+          ((eq? msg 'reset) reset)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
