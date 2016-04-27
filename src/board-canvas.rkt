@@ -44,7 +44,7 @@
       (define black-tile-bmp (read-bitmap "../Images/Black_Tile.png"))
       
       ; method to draw an individual tile
-      (define/public (draw-tile tile selected?)
+      (define/public (draw-tile tile selected)
         (let ((x (call tile 'get-x))
               (y (call tile 'get-y)))
           (begin
@@ -59,16 +59,17 @@
                   (draw-piece piece x y)
                   void))
             ; highlight tile if applicable
-            (if selected?
+            (if selected
                 (highlight-tile-pos x y "blue")
                 void))))
 
+      ; method to highlight a given tile
       (define/public (highlight-tile tile color)
         (let ((tile-x (call tile 'get-x))
               (tile-y (call tile 'get-y)))
           (highlight-tile-pos tile-x tile-y color)))
 
-      ; method to highlight a given tile
+      ; method to highlight a tile-size rectangle at a given x/y
       (define/public (highlight-tile-pos tile-x tile-y color)
         (begin
           (send (get-dc) set-pen color 3 'solid)
@@ -85,15 +86,6 @@
           (send (get-dc) set-pen "black" 0 'transparent)
           (send (get-dc) set-brush "black" 'hilite)
           (send (get-dc) draw-rectangle 0 0 canvas-size canvas-size)))
-
-;      (define/public (show-winner team)
-;        (define text-target (make-bitmap 100 30))
-;        (define text-dc (new bitmap-dc% (bitmap text-target)))
-;        (begin
-;          (send text-dc set-brush "white" 'transparent)
-;          (send text-dc set-scale 3 3)
-;          (send text-dc draw-text "Hello, World!" 5 1)
-;          (send (get-dc) draw-bitmap (send text-dc get-bitmap) 50 50)))
 
       (define/public (show-winner team)
         (let ((font (make-object font% 40 'modern))

@@ -9,6 +9,7 @@
 
 (provide main)
 
+(require "tile.rkt")
 (require "call.rkt")
 (require "board.rkt")
 (require "pieces.rkt")
@@ -24,6 +25,7 @@
 (define (start-game)
   (let ((board (make-board))
         (selected-tile '())
+        (selected-valid-moves '())
         (moused-over-tile '())
         (player-turn white-team)
         (winner '()))
@@ -33,11 +35,13 @@
       (begin
         (call board 'reset)
         (set! selected-tile '())
+        (set! selected-valid-moves '())
         (set! moused-over-tile '())
         (set! player-turn white-team)
         (set! winner '())
         (print "Game was reset")))
 
+    ; helper procedure to turn team symbol into string
     (define (team-to-string team)
       (if (eq? team white-team)
           "White"
@@ -60,6 +64,11 @@
       (if (null? selected-tile)
           (select-tile tile)
           (attempt-move tile)))
+
+    ; deselects a tile
+    (define (deselect-tile)
+      (set! selected-tile '())
+      (set! selected-valid-moves '()))
     
     ; attempts to select a tile, checks to make sure that the
     ; tile is a valid selection for the current player
@@ -71,11 +80,13 @@
             ; not a valid selection
             (begin 
               (print "Selection invalid")
-              ; not working? not sure why
+              ; not working because it is overriden by on-canvas-paint, need to figure out
+              ; a way to marshal this tile into on-canvas-paint
               (send board-canvas highlight-tile tile "red"))
             
             ; else select the tile
             (begin (set! selected-tile tile)
+                   (set! selected-valid-moves (call (call tile 'get-piece) 'get-valid-moves board))
                    (print "Selected tile")))))
     
     ; procedure for attempting to move a piece from selected-tile
@@ -84,7 +95,7 @@
       (let ((result (call board 'move-piece selected-tile dest-tile)))
         (begin
           (print (move-result-desc result))
-          (set! selected-tile '())
+          (deselect-tile)
           (unless (not (move-result-success? result)) (swap-turns))
           (process-captured-piece (move-result-piece result))
           )))
@@ -147,10 +158,15 @@
     ; callback for canvas paint
     (define (on-canvas-paint canvas dc)
       (begin
-        ; map ove tiles to print
+        ; map over tiles to print
         (map
          (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
          (call board 'get-all-tiles))
+
+        ; highlight valid moves in blue
+        (map
+         (λ (tile) (send canvas highlight-tile tile "blue"))
+         selected-valid-moves)
 
         ; mute display if winner is declared
         (unless (null? winner) (send canvas mute-colors))))
