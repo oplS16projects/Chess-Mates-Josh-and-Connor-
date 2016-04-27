@@ -81,22 +81,26 @@
         (begin
           (print (move-result-desc result))
           (set! selected-tile '())
+          (unless (not (move-result-success? result)) (swap-turns))
           (process-captured-piece (move-result-piece result))
-          (if (move-result-success? result) (swap-turns) void))))
+          )))
     
     ; for now only delcares a winner, doesn't do anyting else
     ; TODO: send captured pieces to list to be displayed later?
     (define (process-captured-piece piece)
-      (unless (null? piece)
-        (if (eq? king% (call piece 'get-type))
-            (declare-winner (call piece 'get-team))
-            void)))
+        (unless (null? piece)
+          (if (eq? king% (call piece 'get-type))
+              ; call game if king was captured
+              (declare-winner (call piece 'get-team))
+              ; TODO: else print captured piece
+              void)))
     
     ; sets winner variable based on what team was captured
     (define (declare-winner captured-team)
       (set! winner (if (eq? captured-team white-team)
                        black-team
-                       white-team)))
+                       white-team))
+      (print ""))
     
     ; procedure for printing a string to the window's output-msg
     (define (print string-msg)

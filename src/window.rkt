@@ -38,17 +38,22 @@
          (height 600)
          (style (list 'no-resize-border))))
 
+  ; horizontal panel to hold output-msg and reset button
+  (define panel
+    (new horizontal-panel%
+         (parent frame)))
+
   ; string representing last message sent to the user
   (define output-msg
     (new message%
-         (parent frame)
+         (parent panel)
          (label "Welcome to ChessNuts")
-         (min-width 300)
+         (min-width 525)
          (font (make-object font% 15 'default))))
 
   ; button for reseting the game
   (new button%
-       (parent frame)
+       (parent panel)
        (label "Reset")
        (callback reset-proc))
 
