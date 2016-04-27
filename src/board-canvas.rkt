@@ -13,6 +13,7 @@
 (require racket/draw)
 
 (require "call.rkt")
+(require "teams.rkt")
 
 (provide make-board-canvas)
 
@@ -26,6 +27,12 @@
          paint-proc       ; λ -> (canvas dc)
          )
 
+  ; constant for canvas size (600 x 600)
+  (define canvas-size 600)
+  
+  ; constant for tile sprite size (75 x 75)
+  (define tile-bmp-size 75)
+
   (define board-canvas%
     (class canvas%
       ; inherit methods from base canvas% class
@@ -35,9 +42,6 @@
       ; tile sprites
       (define white-tile-bmp (read-bitmap "../Images/White_Tile.png"))
       (define black-tile-bmp (read-bitmap "../Images/Black_Tile.png"))
-      
-      ; constant for tile sprite size (75 x 75)
-      (define tile-bmp-size 75)
       
       ; method to draw an individual tile
       (define/public (draw-tile tile selected?)
@@ -59,16 +63,40 @@
                 (highlight-tile x y "blue")
                 void))))
 
+      ; method to highlight a given tile
       (define/public (highlight-tile tile-x tile-y color)
         (begin
-          ;(refresh-now)
-          (send (get-dc) set-pen color 2 'solid)
-          (send (get-dc) set-brush color 'transparent)
+          (send (get-dc) set-pen color 3 'solid)
+          (send (get-dc) set-brush color 'hilite)
           (send (get-dc) draw-rectangle
                 (* tile-x tile-bmp-size)
                 (* tile-y tile-bmp-size)
                 tile-bmp-size
                 tile-bmp-size)))
+
+      ; method to mute the canvas to indicate non-interactivity
+      (define/public (mute-colors)
+        (begin
+          (send (get-dc) set-pen "black" 0 'transparent)
+          (send (get-dc) set-brush "black" 'hilite)
+          (send (get-dc) draw-rectangle 0 0 canvas-size canvas-size)))
+
+;      (define/public (show-winner team)
+;        (define text-target (make-bitmap 100 30))
+;        (define text-dc (new bitmap-dc% (bitmap text-target)))
+;        (begin
+;          (send text-dc set-brush "white" 'transparent)
+;          (send text-dc set-scale 3 3)
+;          (send text-dc draw-text "Hello, World!" 5 1)
+;          (send (get-dc) draw-bitmap (send text-dc get-bitmap) 50 50)))
+
+      (define/public (show-winner team)
+        (let ((font (make-object font% 40 'modern))
+              (msg (string-append (if (eq? team white-team) "White" "Black")
+                                  " Is The Winner!")))
+          (begin
+            (send (get-dc) set-font font)
+            (send (get-dc) draw-text msg 10 200))))
       
       ; method to draw an individual piece
       (define (draw-piece piece x y)
@@ -94,6 +122,6 @@
 
   (new board-canvas%
        (parent parent-frame)
-       (min-width 600)
-       (min-height 600)
+       (min-width canvas-size)
+       (min-height canvas-size)
        (paint-callback paint-proc)))

@@ -25,7 +25,8 @@
   (let ((board (make-board))
         (selected-tile '())
         (moused-over-tile '())
-        (player-turn white-team))
+        (player-turn white-team)
+        (winner '()))
     
     ; swap to the next player's turn
     (define (swap-turns)
@@ -64,21 +65,19 @@
           (process-captured-piece (move-result-piece result))
           (if (move-result-success? result) (swap-turns) void))))
     
-    ; for now only delcares a winner, doesn't do anyting else 
+    ; for now only delcares a winner, doesn't do anyting else
+    ; TODO: send captured pieces to list to be displayed later?
     (define (process-captured-piece piece)
-      (if (null? piece)
-          void
-          (if (eq? king% (call piece 'get-team))
-              (declare-winner (call piece 'get-team))
-              void)))
+      (unless (null? piece)
+        (if (eq? king% (call piece 'get-type))
+            (declare-winner (call piece 'get-team))
+            void)))
     
-    ; broken? won't print winner msg
+    ; sets winner variable based on what team was captured
     (define (declare-winner captured-team)
-      (let ((winner-msg (string-append
-                         (if (eq? captured-team black-team)
-                             "White player" "Black player")
-                         " is the winner!")))
-        (print winner-msg)))
+      (set! winner (if (eq? captured-team white-team)
+                       black-team
+                       white-team)))
     
     ; procedure for printing a string to the window's output-msg
     (define (print string-msg)
@@ -87,12 +86,12 @@
     ; callback for mouse click
     (define (on-mouse-click tile-x tile-y)
       (let ((tile (call board 'tile-at tile-x tile-y)))
-        (click-tile tile)))
+        (if (null? winner) (click-tile tile) void)))
 
     ; callback for mouse over
     (define (on-mouse-over tile-x tile-y)
       (let ((tile (call board 'tile-at tile-x tile-y)))
-        (if (not (eq? tile moused-over-tile))
+        (if (and (null? winner) (not (eq? tile moused-over-tile)))
             (begin (send board-canvas refresh-now)
                    (send board-canvas highlight-tile tile-x tile-y "brown")
                    (set! moused-over-tile tile))
@@ -100,9 +99,14 @@
     
     ; callback for canvas paint
     (define (on-canvas-paint canvas dc)
-      (map
-       (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
-       (call board 'get-all-tiles)))
+      (begin
+        (map
+         (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
+         (call board 'get-all-tiles))
+
+        ; temp debug
+        (unless (null? winner) (send canvas mute-colors))
+        ))
     
     ; create window and canvas resources, then present
     ; window to user
