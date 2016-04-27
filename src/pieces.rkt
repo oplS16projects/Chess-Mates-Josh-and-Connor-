@@ -16,7 +16,8 @@
 
 (provide
  pawn% rook% bishop% knight% king% queen%
- make-piece)
+ make-piece
+ piece-type-to-string)
 
 ;; bindings for the individual class symbols, good to have
 ;; compile-time checking that you typed in the piece name
@@ -65,7 +66,6 @@
           ((eq? msg 'set-tile) set-tile)
           (else (error "Unrecognized method for" (get-type) ': msg)))))
 
-
 ;; "valid move" means the tile exists, and is either
 ;; empty or contains an enemy piece. note that this method
 ;; is not suitable for the pawn class, which uses different rules
@@ -75,6 +75,15 @@
        (or (call tile 'is-empty)
            (not (eq? team (call (call tile 'get-piece) 'get-team))))))
 
+; method to convert piece types to strings
+(define (piece-type-to-string type)
+  (cond ((eq? type pawn%) "pawn")
+        ((eq? type rook%) "rook")
+        ((eq? type bishop%) "bishop")
+        ((eq? type knight%) "knight")
+        ((eq? type king%) "king")
+        ((eq? type queen%) "queen")
+        (else (error ("Unrecognized piece type in PIECE-TYPE-TO-STRING")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PIECE IMPLEMENTATIONS ;;
