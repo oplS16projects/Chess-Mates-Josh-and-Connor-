@@ -27,12 +27,31 @@
         (moused-over-tile '())
         (player-turn white-team)
         (winner '()))
+
+    ; method to reset the chess board
+    (define (reset-game)
+      (begin
+        (call board 'reset)
+        (set! selected-tile '())
+        (set! moused-over-tile '())
+        (set! player-turn white-team)
+        (set! winner '())
+        (print "Game was reset")))
+
+    (define (team-to-string team)
+      (if (eq? team white-team)
+          "White"
+          "Black"))
     
     ; swap to the next player's turn
     (define (swap-turns)
-      (if (eq? player-turn white-team)
-          (set! player-turn black-team)
-          (set! player-turn white-team)))
+      (begin
+        (if (eq? player-turn white-team)
+            (set! player-turn black-team)
+            (set! player-turn white-team))
+        (print (string-append
+                (team-to-string player-turn)
+                "'s turn"))))
     
     ; when given a tile, attempt a selection if a piece
     ; has not already been selected. otherwise, attempt
@@ -104,14 +123,17 @@
          (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
          (call board 'get-all-tiles))
 
-        ; temp debug
-        (unless (null? winner) (send canvas mute-colors))
-        ))
+        ; mute display if winner is declared
+        (unless (null? winner) (send canvas mute-colors))))
+
+    ; callback for the reset button
+    (define (on-reset-button button event)
+      (reset-game))
     
     ; create window and canvas resources, then present
     ; window to user
     (begin
-      (define window (make-window))
+      (define window (make-window on-reset-button))
       (define board-canvas (make-board-canvas
                             window
                             on-mouse-click

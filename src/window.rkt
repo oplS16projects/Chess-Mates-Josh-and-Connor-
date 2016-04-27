@@ -17,7 +17,9 @@
 
 ; closure that captures a chess-frame% construction
 ; and returns it to the caller
-(define (make-window)
+(define (make-window
+         reset-proc ; λ -> (button event)
+         )
 
   (define chess-frame%
     (class frame%
@@ -38,12 +40,17 @@
 
   ; string representing last message sent to the user
   (define output-msg
-    
     (new message%
          (parent frame)
-         (label "No events so far...")
+         (label "Welcome to ChessNuts")
          (min-width 300)
          (font (make-object font% 15 'default))))
+
+  ; button for reseting the game
+  (new button%
+       (parent frame)
+       (label "Reset")
+       (callback reset-proc))
 
   ; return frame to user
   frame)
