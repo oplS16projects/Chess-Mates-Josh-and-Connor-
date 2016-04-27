@@ -60,11 +60,16 @@
                   void))
             ; highlight tile if applicable
             (if selected?
-                (highlight-tile x y "blue")
+                (highlight-tile-pos x y "blue")
                 void))))
 
+      (define/public (highlight-tile tile color)
+        (let ((tile-x (call tile 'get-x))
+              (tile-y (call tile 'get-y)))
+          (highlight-tile-pos tile-x tile-y color)))
+
       ; method to highlight a given tile
-      (define/public (highlight-tile tile-x tile-y color)
+      (define/public (highlight-tile-pos tile-x tile-y color)
         (begin
           (send (get-dc) set-pen color 3 'solid)
           (send (get-dc) set-brush color 'hilite)
