@@ -69,7 +69,11 @@
                 (not (eq? player-turn (call piece 'get-team))))
             ; if tile is empty or has enemy piece, then it is
             ; not a valid selection
-            (print "Selection invalid")
+            (begin 
+              (print "Selection invalid")
+              ; not working? not sure why
+              (send board-canvas highlight-tile tile "red"))
+            
             ; else select the tile
             (begin (set! selected-tile tile)
                    (print "Selected tile")))))
@@ -84,16 +88,36 @@
           (unless (not (move-result-success? result)) (swap-turns))
           (process-captured-piece (move-result-piece result))
           )))
+
+    (define (print-capture-message piece)
+      (print (string-append
+              (team-to-string (call piece 'get-team)) " "
+              (piece-type-to-string (call piece 'get-type))
+              " was captured")))
     
-    ; for now only delcares a winner, doesn't do anyting else
+    ; declares captured pieces, will also end the game when a king is captured
     ; TODO: send captured pieces to list to be displayed later?
-    (define (process-captured-piece piece)
+    (define (process-captured-piece0 piece)
         (unless (null? piece)
           (if (eq? king% (call piece 'get-type))
               ; call game if king was captured
               (declare-winner (call piece 'get-team))
-              ; TODO: else print captured piece
-              void)))
+              ; else print captured piece
+              (print (string-append
+                      (team-to-string (call piece 'get-team)) " "
+                      (piece-type-to-string (call piece 'get-type))
+                      " was captured"))
+              )))
+
+    (define (process-captured-piece piece)
+      (unless (null? piece)
+        (begin
+          ; delcare winner if king was captured
+          (unless (not (eq? king% (call piece 'get-type)))
+            (declare-winner (call piece 'get-team)))
+          ; print captured piece message
+          (print-capture-message piece))))
+                 
     
     ; sets winner variable based on what team was captured
     (define (declare-winner captured-team)
@@ -109,20 +133,21 @@
     ; callback for mouse click
     (define (on-mouse-click tile-x tile-y)
       (let ((tile (call board 'tile-at tile-x tile-y)))
-        (if (null? winner) (click-tile tile) void)))
+        (unless (not (null? winner)) (click-tile tile))))
 
     ; callback for mouse over
     (define (on-mouse-over tile-x tile-y)
       (let ((tile (call board 'tile-at tile-x tile-y)))
         (if (and (null? winner) (not (eq? tile moused-over-tile)))
             (begin (send board-canvas refresh-now)
-                   (send board-canvas highlight-tile tile-x tile-y "brown")
+                   (send board-canvas highlight-tile-pos tile-x tile-y "brown")
                    (set! moused-over-tile tile))
             void)))
     
     ; callback for canvas paint
     (define (on-canvas-paint canvas dc)
       (begin
+        ; map ove tiles to print
         (map
          (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
          (call board 'get-all-tiles))
