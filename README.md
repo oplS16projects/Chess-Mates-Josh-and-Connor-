@@ -107,6 +107,10 @@ The GUI part of this project is going to require more work than expected, so tog
 
 ### Final Presentation (last week of semester)
 Polishing off code.  Castling and detection of checks and checkmates.  Working on green colored tiles to indicate proper moves.  Making sure everything works together, and bug fixing.  In depth testing.  BUG FIXING!  BUG FIXING!
+
+**Update 4/28:**
+The game is almost done, and thankfully not buggy at all, so we're mostly going to be adding features in these final hours. The program is fun to use and complete enough to allow the users to play several games of chess without encountering rule-breaking bugs or needing to restart the program between matches. For the final release, I'd like to add detection of check (check-mate will not be possible, as it would require significnat refactoring), the transformation of pawns into queens when they reach the opposite side of the board, and castling. 
+
 ## Group Responsibilities
 
 **Conor:**
