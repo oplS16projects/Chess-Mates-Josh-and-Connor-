@@ -1,51 +1,36 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
+    <meta name="description" content="Chess-mates-josh-and-connor- : ">
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
-    <title>Chess-mates-josh-and-connor- by oplS16projects</title>
+    <title>Chess-mates-josh-and-connor-</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-">View on GitHub</a>
-    <div class="shell">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Chess-mates-josh-and-connor-</h1>
-            <h2></h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-">View on GitHub</a>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+          <h1 id="project_title">Chess-mates-josh-and-connor-</h1>
+          <h2 id="project_tagline"></h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="fp7-chessnuts" class="anchor" href="#fp7-chessnuts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FP7-ChessNuts</h1>
 
@@ -62,80 +47,59 @@
 <h2>
 <a id="screenshot" class="anchor" href="#screenshot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Screenshot</h2>
 
-<p>(insert a screenshot here. You may opt to get rid of the title for it. You need at least one screenshot. Make it actually appear here, don't just add a link.)</p>
+<p>Here is a screenshot of our chessboard.</p>
 
-<p>Here's a demonstration of how to display an image that's uploaded to this repo:
-<img src="withdraw.png" alt="screenshot showing env diagram"></p>
+<p><img src="Images/Chessboard_Image.png" alt="screenshot showing chessboard"></p>
 
 <h2>
 <a id="concepts-demonstrated" class="anchor" href="#concepts-demonstrated" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Concepts Demonstrated</h2>
 
-<p>Identify the OPL concepts demonstrated in your project. Be brief. A simple list and example is sufficient. </p>
-
-<ul>
-<li>
-<strong>Data abstraction</strong> is used to provide access to the elements of the RSS feed.</li>
-<li>The objects in the OpenGL world are represented with <strong>recursive data structures.</strong>
-</li>
-<li>
-<strong>Symbolic language processing techniques</strong> are used in the parser.</li>
-</ul>
+<p>Chess is a highly stateful game, therefor our project is very object-oriented.  The pieces, tiles, and board are all seperated into classes.  High-order procedures like map and filter were very helpful when trying to find the valid moves that a piece can make.</p>
 
 <h2>
 <a id="external-technology-and-libraries" class="anchor" href="#external-technology-and-libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>External Technology and Libraries</h2>
 
-<p>Briefly describe the existing technology you utilized, and how you used it. Provide a link to that technology(ies).</p>
+<p>We imported various sprite images to use for our pieces.  We used two libraries throughout our project, racket/GUI and racket/Draw. Racket/GUI and racket/Draw to create the chessboard and instantiate the window, and racket/draw again to draw the Chess pieces.</p>
 
 <h2>
 <a id="favorite-scheme-expressions" class="anchor" href="#favorite-scheme-expressions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Favorite Scheme Expressions</h2>
 
 <h4>
-<a id="mark-a-team-member" class="anchor" href="#mark-a-team-member" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mark (a team member)</h4>
+<a id="josh" class="anchor" href="#josh" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Josh</h4>
 
-<p>Each team member should identify a favorite expression or procedure, written by them, and explain what it does. Why is it your favorite? What OPL philosophy does it embody?
-Remember code looks something like this:</p>
+<p>The code linked below is my favorite scheme expression.  It's so simple, yet it embodies almost all of the mobility of a pawn.  A pawn can move up two tiles if it has not moved yet.  So the code checks if the Y coordinate is equal to its start-y, and if it is, then it will allow the pawn to move two spaces.  Again, so simple, yet creative. </p>
 
-<div class="highlight highlight-source-scheme"><pre>(<span class="pl-c1">map</span> (<span class="pl-k">lambda</span> (<span class="pl-v">x</span>) (foldr compose functions)) data)</pre></div>
+<div class="highlight highlight-source-scheme"><pre><span class="pl-c">; if y-pos = start-pos, then piece hasn't moved and allow double move</span>
+          (<span class="pl-k">if</span> (<span class="pl-k">and</span> (<span class="pl-k">=</span> y start-y)
+                   (call (call board <span class="pl-c1">'tile-at</span> x (op y <span class="pl-c1">1</span>)) <span class="pl-c1">'is-empty</span>)
+                   (call (call board <span class="pl-c1">'tile-at</span> x (op y <span class="pl-c1">2</span>)) <span class="pl-c1">'is-empty</span>))
+              (<span class="pl-k">set!</span> moves (<span class="pl-c1">cons</span> (call board <span class="pl-c1">'tile-at</span> x (op y <span class="pl-c1">2</span>)) moves))
+              void)</pre></div>
 
 <h4>
-<a id="lillian-another-team-member" class="anchor" href="#lillian-another-team-member" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Lillian (another team member)</h4>
+<a id="conor" class="anchor" href="#conor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conor</h4>
 
-<p>This expression reads in a regular expression and elegantly matches it against a pre-existing hashmap....</p>
+<p>Each team member should identify a favorite expression or procedure, written by them, and explain what it does. Why is it your favorite? What OPL philosophy does it embody?</p>
 
-<div class="highlight highlight-source-scheme"><pre>(<span class="pl-k">let*</span> ((expr (convert-to-regexp (read-line my-in-port)))
-             (matches (flatten
-                       (hash-map *words*
-                                 (<span class="pl-k">lambda</span> (<span class="pl-v">key value</span>)
-                                   (<span class="pl-k">if</span> (regexp-match expr key) key <span class="pl-c1">'()</span>))))))
-  matches)</pre></div>
-
-<h2>
-<a id="additional-remarks" class="anchor" href="#additional-remarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Additional Remarks</h2>
-
-<p>Anything else you want to say in your report. Can rename or remove this section.</p>
+<div class="highlight highlight-source-scheme"><pre>Link code here
+  matches<span class="pl-ii">)</span></pre></div>
 
 <h1>
 <a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to Download and Run</h1>
 
-<p>You may want to link to your latest release for easy downloading by people (such as Mark).</p>
-
-<p>Include what file to run, what to do with that file, how to interact with the app when its running, etc. </p>
+<p>Simply download the zip file(link at the top of the page), open the chess-main.rkt  file, and run it.  Easy as Sunday morning.</p>
       </section>
+    </div>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/oplS16projects">oplS16projects</a> can be found on <a href="https://github.com/oplS16projects/Chess-Mates-Josh-and-Connor-">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Chess-mates-josh-and-connor- maintained by <a href="https://github.com/oplS16projects">oplS16projects</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
-
     </div>
 
     
+
   </body>
 </html>
