@@ -2,8 +2,10 @@
 
 # ChessNuts: The People's Chess Simulator
 
-### Statement
+### Instructions
+To open ChessNuts, run `src/main.rkt`. Use left click to select/move a piece, and right click to cancel a selection.
 
+### Statement
 For this project, we are going to design and implement a simulation of the ancient board game Chess.  We both have some interest in the game of Chess.  We hope to learn how to incorporate both a stable, high-performing back end and a visually appealing UI. We hope to learn over the course of this project how to use the Racket language to solve a problem that would traditionally be solved using a more imperative language.
 
 ### Analysis
