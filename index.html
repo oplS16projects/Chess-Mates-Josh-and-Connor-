@@ -86,8 +86,45 @@
   moves for rook, bishop, and queen) into a simple solution that can be customized with different parameters.
 </p>
 
-<div class="highlight highlight-source-scheme"><pre>Link code here
-  matches<span class="pl-ii">)</span></pre></div>
+<div class="highlight highlight-source-scheme"><pre>;; baseline procedure for accumulating tiles with a given pattern
+;; of transforming x and y. Respects line of sight, and makes
+;; the distinction between a valid move onto an enemy tile and
+;; an invalid move onto a friendly tile
+(define (accum-tiles
+         x-transform
+         y-transform
+         board
+         start-tile
+         team)
+  
+  (define (iter tile out-lst)
+    (cond
+      ; if tile is null or same team, return current list
+      ((or (eq? tile '())
+           (and (not (call tile 'is-empty))
+                (eq? team (call (call tile 'get-piece) 'get-team))))
+       out-lst)
+      
+      ; if tile contains enemy piece, return current list + current tile
+      ((and (not (call tile 'is-empty))
+            (not (eq? team (call (call tile 'get-piece) 'get-team))))
+       (cons tile out-lst))
+      
+      ; otherwise store current tile and make recursive call
+      (else
+       (let ((x (call tile 'get-x))
+             (y (call tile 'get-y)))
+         (iter (call board 'tile-at (x-transform x) (y-transform y))
+               (cons tile out-lst))))))
+  
+  ; baseline call to iter, starts with
+  ; a transform because the start tile
+  ; is not considered to be a valid move
+  (let ((x (call start-tile 'get-x))
+        (y (call start-tile 'get-y)))
+    (iter (call board 'tile-at (x-transform x) (y-transform y))
+          '())))
+</span></pre></div>
 
 <h1>
 <a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to Download and Run</h1>
