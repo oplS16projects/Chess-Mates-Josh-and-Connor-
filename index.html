@@ -79,7 +79,14 @@
 <h4>
 <a id="conor" class="anchor" href="#conor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conor</h4>
 
-<p>Each team member should identify a favorite expression or procedure, written by them, and explain what it does. Why is it your favorite? What OPL philosophy does it embody?</p>
+<p>
+I'm particularly proud of this procedure I wrote to find valid moves for the rook, bishop, and queen classes.
+It takes 2 procedures as parameters to transform over the X and y coordinates of the tile, allowing it to accumulate
+tiles in any pattern you can think of. As a higher-order procedure, this code is the embodiment of the functional
+programming techniques that we learned this semester. Having written this function made implementing the pathfinding
+for rook, bishop, and queen extremely painless and easy compared to how we would have otherwise needed to 
+implement those methods.
+</p>
 
 <div class="highlight highlight-source-scheme"><pre>(define (accum-tiles
          x-transform
