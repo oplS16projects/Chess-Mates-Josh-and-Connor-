@@ -23,6 +23,7 @@
 (define (make-board-canvas
          parent-frame
          mouse-click-proc ; λ -> (tile-x tile-y)
+         right-click-proc ; λ -> (void)
          mouse-over-proc  ; λ -> (tile-x tile-y)
          paint-proc       ; λ -> (canvas dc)
          )
@@ -90,10 +91,10 @@
       (define/public (show-winner team)
         (let ((font (make-object font% 40 'modern))
               (msg (string-append (if (eq? team white-team) "White" "Black")
-                                  " Is The Winner!")))
+                                  " Wins!")))
           (begin
             (send (get-dc) set-font font)
-            (send (get-dc) draw-text msg 10 200))))
+            (send (get-dc) draw-text msg 130 240))))
       
       ; method to draw an individual piece
       (define (draw-piece piece x y)
@@ -108,11 +109,21 @@
               (mouse-y (send event get-y)))
           (let ((tile-x (floor (/ mouse-x tile-bmp-size)))
                 (tile-y (floor (/ mouse-y tile-bmp-size))))
-            ; if event was button down, call into mouse-click
-            (if (send event button-down?)
-                (begin (mouse-click-proc tile-x tile-y) (refresh-now))
-                ; else call into mouse-over
-                (mouse-over-proc tile-x tile-y)))))
+            (cond
+              ; if event is left click, call click proc
+              ((eq? 'left-down (send event get-event-type))
+               (begin (mouse-click-proc tile-x tile-y) (refresh-now)))
+              ; if event is right click, call right clikc proc
+              ((eq? 'right-down (send event get-event-type))
+               (begin (right-click-proc) (refresh-now)))
+              ; if mouse leaves window, don't highlight any tile
+              ((send event leaving?)
+               (refresh-now))
+              ; if event is neither of the above but is mouse motion,
+              ; call mouse-over-proc
+              ((eq? 'motion (send event get-event-type))
+               (mouse-over-proc tile-x tile-y))))))
+            
       
       ; end of board-canvas% definition
       (super-new)))

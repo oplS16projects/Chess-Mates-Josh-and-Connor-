@@ -58,10 +58,12 @@
                 "'s turn"))))
     
     ; when given a tile, attempt a selection if a piece
-    ; has not already been selected. otherwise, attempt
-    ; a move.
+    ; has not already been selected, or if the tile contains
+    ; a selectable piece. otherwise attempts to move
     (define (click-tile tile )
-      (if (null? selected-tile)
+      (if (or (null? selected-tile)
+              (and (not (call tile 'is-empty))
+                   (eq? player-turn (call (call tile 'get-piece) 'get-team))))
           (select-tile tile)
           (attempt-move tile)))
 
@@ -79,7 +81,7 @@
             ; if tile is empty or has enemy piece, then it is
             ; not a valid selection
             (begin 
-              (print "Selection invalid")
+              (print (string-append "Invalid selection for " (team-to-string player-turn)))
               ; not working because it is overriden by on-canvas-paint, need to figure out
               ; a way to marshal this tile into on-canvas-paint
               (send board-canvas highlight-tile tile "red"))
@@ -87,14 +89,15 @@
             ; else select the tile
             (begin (set! selected-tile tile)
                    (set! selected-valid-moves (call (call tile 'get-piece) 'get-valid-moves board))
-                   (print "Selected tile")))))
+                   ;(print "Selected tile")
+                   ))))
     
     ; procedure for attempting to move a piece from selected-tile
     ; to dest-tile
     (define (attempt-move dest-tile)
       (let ((result (call board 'move-piece selected-tile dest-tile)))
         (begin
-          (print (move-result-desc result))
+          ;(print (move-result-desc result))
           (deselect-tile)
           (unless (not (move-result-success? result)) (swap-turns))
           (process-captured-piece (move-result-piece result))
@@ -146,6 +149,10 @@
       (let ((tile (call board 'tile-at tile-x tile-y)))
         (unless (not (null? winner)) (click-tile tile))))
 
+    ; callback for right click
+    (define (on-right-click)
+      (deselect-tile))
+
     ; callback for mouse over
     (define (on-mouse-over tile-x tile-y)
       (let ((tile (call board 'tile-at tile-x tile-y)))
@@ -168,8 +175,12 @@
          (λ (tile) (send canvas highlight-tile tile "blue"))
          selected-valid-moves)
 
-        ; mute display if winner is declared
-        (unless (null? winner) (send canvas mute-colors))))
+        ; mute display colors and display winner message
+        ; if winner is declared
+        (unless (null? winner)
+          (begin
+            (send canvas mute-colors)
+            (send canvas show-winner winner)))))
 
     ; callback for the reset button
     (define (on-reset-button button event)
@@ -182,6 +193,7 @@
       (define board-canvas (make-board-canvas
                             window
                             on-mouse-click
+                            on-right-click
                             on-mouse-over
                             on-canvas-paint))
       (send window show #t))))
