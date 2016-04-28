@@ -5,9 +5,10 @@
 ;; Author: Conor Finegan
 ;; Contact: conor_finegan@student.uml.edu
 ;;
-;; Purpose: file containing entry point for the program
+;; Purpose: file containing logic for high-level game state
+;; and player swapping
 
-(provide main)
+(provide start-game)
 
 (require "tile.rkt")
 (require "call.rkt")
@@ -17,9 +18,6 @@
 (require "window.rkt")
 (require "board-canvas.rkt")
 (require "move-result.rkt")
-
-(define (main)
-  (start-game))
 
 ; creates a new game
 (define (start-game)
@@ -197,5 +195,3 @@
                             on-mouse-over
                             on-canvas-paint))
       (send window show #t))))
-
-(main)
