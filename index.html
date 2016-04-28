@@ -79,41 +79,10 @@
 <h4>
 <a id="conor" class="anchor" href="#conor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conor</h4>
 
-<p>
-I'm particularly proud of this procedure I wrote to find valid moves for the rook, bishop, and queen classes.
-It takes 2 procedures as parameters to transform over the X and y coordinates of the tile, allowing it to accumulate
-tiles in any pattern you can think of. As a higher-order procedure, this code is the embodiment of the functional
-programming techniques that we learned this semester. Having written this function made implementing the pathfinding
-for rook, bishop, and queen extremely painless and easy compared to how we would have otherwise needed to 
-implement those methods.
-</p>
+<p>Each team member should identify a favorite expression or procedure, written by them, and explain what it does. Why is it your favorite? What OPL philosophy does it embody?</p>
 
-<div class="highlight highlight-source-scheme"><pre>(define (accum-tiles
-         x-transform
-         y-transform
-         board
-         start-tile
-         team)
-  
-  (define (iter tile out-lst)
-    (cond
-      ; if tile is null or same team, return current list
-      ((or (eq? tile '())
-           (and (not (call tile 'is-empty))
-                (eq? team (call (call tile 'get-piece) 'get-team))))
-       out-lst)
-      
-      ; if tile contains enemy piece, return current list + current tile
-      ((and (not (call tile 'is-empty))
-            (not (eq? team (call (call tile 'get-piece) 'get-team))))
-       (cons tile out-lst))
-      
-      ; otherwise store current tile and make recursive call
-      (else
-       (let ((x (call tile 'get-x))
-             (y (call tile 'get-y)))
-         (iter (call board 'tile-at (x-transform x) (y-transform y))
-               (cons tile out-lst))))))</span></pre></div>
+<div class="highlight highlight-source-scheme"><pre>Link code here
+  matches<span class="pl-ii">)</span></pre></div>
 
 <h1>
 <a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to Download and Run</h1>
