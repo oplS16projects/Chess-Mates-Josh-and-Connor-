@@ -82,6 +82,7 @@
                    (eq? player-turn (call (call tile 'get-piece) 'get-team))))
           (select-tile tile)
           (attempt-move tile)))
+        
 
     ; deselects a tile
     (define (deselect-tile)

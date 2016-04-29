@@ -41,7 +41,8 @@
   (define (set-piece new-piece)
     (set! piece new-piece))
 
-  ;; draw method (WIP)
+  ;; draw method
+  ;; only used to bring ASCII during debug
   (define (draw)
     (if (null? piece)
         " "
