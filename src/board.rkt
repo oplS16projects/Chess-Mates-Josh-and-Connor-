@@ -207,6 +207,41 @@
              (null? t-piece)
              (null? b-piece)))))
 
+  ; method to calculate whether the defending-team is in check
+  ; if the defending team is in check, returns a list with the
+  ; defending king at the head, followed by all tiles with valid
+  ; moves to his tile
+  ; if the defending team is not in check, returns '()
+  (define (find-check defending-team)
+
+    ; helper procedure to get all pieces NOT of defending-team color
+    (define (not-defending-pred tile)
+      (let ((piece (call tile 'get-piece)))
+        (and (not (null? piece))
+             (not (eq? defending-team (call piece 'get-team))))))
+
+    ; helper procedure to find defending king
+    (define (defending-king-pred tile)
+      (let ((piece (call tile 'get-piece)))
+        (and (not (null? piece))
+             (eq? king% (call piece 'get-type))
+             (eq? defending-team (call piece 'get-team)))))
+
+    (let ((attacking-tiles (filter not-defending-pred (get-all-tiles)))
+          (defending-king (car (filter defending-king-pred (get-all-tiles)))))
+
+      ; helper procedure to find if a piece can reach the king
+      (define (can-reach-king-pred tile)
+        (let ((valid-moves (call (call tile 'get-piece) 'get-valid-moves dispatch)))
+          (not (eq? #f (member defending-king valid-moves)))))
+
+      (let ((dangerous-moves (filter can-reach-king-pred attacking-tiles)))
+        (if (null? dangerous-moves)
+            '()
+            (cons defending-king dangerous-moves)))))
+              
+          
+
   ;; dispatch method
   (define (dispatch msg)
     (cond ((eq? msg 'tile-at) tile-at)
@@ -217,6 +252,7 @@
           ((eq? msg 'reset) reset)
           ((eq? msg 'castle) castle)
           ((eq? msg 'can-castle) can-castle?)
+          ((eq? msg 'find-check) find-check)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
@@ -225,3 +261,12 @@
     (initialize)
     (reset)
     dispatch))
+
+;(define b (make-board))
+;
+;(call b 'force-move-piece (call b 'tile-at 4 0) (call b 'tile-at 4 4))
+;(call b 'force-move-piece (call b 'tile-at 3 7) (call b 'tile-at 7 4))
+;
+;((b 'draw))
+;
+;(call b 'find-check black-team)
