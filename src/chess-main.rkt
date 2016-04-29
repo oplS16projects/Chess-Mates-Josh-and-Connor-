@@ -26,6 +26,7 @@
         (selected-valid-moves '())
         (moused-over-tile '())
         (player-turn white-team)
+        (check-moves '())
         (winner '()))
 
     ; method to reset the chess board
@@ -36,6 +37,7 @@
         (set! selected-valid-moves '())
         (set! moused-over-tile '())
         (set! player-turn white-team)
+        (set! check-moves '())
         (set! winner '())
         (send window set-castle-button #f)
         (print "Game was reset")))
@@ -45,7 +47,15 @@
       (if (eq? team white-team)
           "White"
           "Black"))
-    
+
+    ; check board for endangered kings
+    (define (find-all-checks)
+      (unless (not (null? winner))
+        (set! check-moves
+              (append
+               (call board 'find-check white-team)
+               (call board 'find-check black-team)))))
+      
     ; swap to the next player's turn
     (define (swap-turns)
       (begin
@@ -107,6 +117,7 @@
           (deselect-tile)
           (unless (not (move-result-success? result)) (swap-turns))
           (process-captured-piece (move-result-piece result))
+          (find-all-checks)
           )))
 
     (define (print-capture-message piece)
@@ -164,6 +175,11 @@
          (λ (tile) (send canvas draw-tile tile (eq? tile selected-tile)))
          (call board 'get-all-tiles))
 
+        ; highlight endangered kings and dangerous pieces in red
+        (map
+         (λ (tile) (send canvas highlight-tile tile "red"))
+         check-moves)
+
         ; highlight valid moves in blue
         (map
          (λ (tile) (send canvas highlight-tile tile "blue"))
@@ -200,3 +216,5 @@
                             on-mouse-over
                             on-canvas-paint))
       (send window show #t))))
+
+(start-game)
