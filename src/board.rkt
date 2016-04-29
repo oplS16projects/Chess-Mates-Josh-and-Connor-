@@ -190,6 +190,19 @@
     (if (eq? team white-team)
         (castle-white)
         (castle-black)))
+  
+  ; method to determine if castling is valid
+  ; for a given team
+  (define (can-castle? team)
+    (let ((y (if (eq? team white-team) 7 0)))
+      (let ((k-piece (call (tile-at 4 y) 'get-piece))
+            (r-piece (call (tile-at 7 y) 'get-piece))
+            (t-piece (call (tile-at 6 y) 'get-piece))
+            (b-piece (call (tile-at 5 y) 'get-piece)))
+        (and (not (call k-piece 'has-moved))
+             (not (call r-piece 'has-moved))
+             (null? t-piece)
+             (null? b-piece)))))
 
   ;; dispatch method
   (define (dispatch msg)
@@ -200,6 +213,7 @@
           ((eq? msg 'force-move-piece) force-move-piece)
           ((eq? msg 'reset) reset)
           ((eq? msg 'castle) castle)
+          ((eq? msg 'can-castle) can-castle?)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
