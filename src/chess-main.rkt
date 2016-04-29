@@ -48,9 +48,16 @@
     ; swap to the next player's turn
     (define (swap-turns)
       (begin
+        ; swap current player identifier
         (if (eq? player-turn white-team)
             (set! player-turn black-team)
             (set! player-turn white-team))
+        
+        ; check if castling is valid
+        (send window set-castle-button
+              (call board 'can-castle player-turn))
+        
+        ; print message for current player's turn
         (print (string-append
                 (team-to-string player-turn)
                 "'s turn"))))
@@ -109,18 +116,6 @@
     
     ; declares captured pieces, will also end the game when a king is captured
     ; TODO: send captured pieces to list to be displayed later?
-    (define (process-captured-piece0 piece)
-        (unless (null? piece)
-          (if (eq? king% (call piece 'get-type))
-              ; call game if king was captured
-              (declare-winner (call piece 'get-team))
-              ; else print captured piece
-              (print (string-append
-                      (team-to-string (call piece 'get-team)) " "
-                      (piece-type-to-string (call piece 'get-type))
-                      " was captured"))
-              )))
-
     (define (process-captured-piece piece)
       (unless (null? piece)
         (begin
@@ -184,10 +179,19 @@
     (define (on-reset-button button event)
       (reset-game))
     
+    ; callback for castle button
+    (define (on-castle-button button event)
+      (begin (call board 'castle player-turn)
+             (send board-canvas refresh-now)
+             (swap-turns)))
+    
     ; create window and canvas resources, then present
     ; window to user
     (begin
-      (define window (make-window on-reset-button))
+      (define window (make-window 
+                      on-reset-button
+                      on-castle-button))
+      
       (define board-canvas (make-board-canvas
                             window
                             on-mouse-click
