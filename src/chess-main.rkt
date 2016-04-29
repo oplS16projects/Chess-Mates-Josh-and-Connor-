@@ -37,6 +37,7 @@
         (set! moused-over-tile '())
         (set! player-turn white-team)
         (set! winner '())
+        (send window set-castle-button #f)
         (print "Game was reset")))
 
     ; helper procedure to turn team symbol into string
