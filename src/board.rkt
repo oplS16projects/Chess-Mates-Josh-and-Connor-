@@ -168,6 +168,28 @@
         (display (draw-tile j i))
         (display " "))
       (newline)))
+  
+  ; method for castling
+  ; doesn't check for validity, just force-moves
+  ; the appropriate tiles
+  (define (castle team)
+    
+    ; helper method for castling black team
+    (define (castle-black)
+      (begin
+        (force-move-piece (tile-at 4 0) (tile-at 6 0))
+        (force-move-piece (tile-at 7 0) (tile-at 5 0))))
+    
+    ; helper method for castling white team
+    (define (castle-white)
+      (begin
+        (force-move-piece (tile-at 4 7) (tile-at 6 7))
+        (force-move-piece (tile-at 7 7) (tile-at 5 7))))
+    
+    ; call appropriate helper
+    (if (eq? team white-team)
+        (castle-white)
+        (castle-black)))
 
   ;; dispatch method
   (define (dispatch msg)
@@ -177,6 +199,7 @@
           ((eq? msg 'move-piece) move-piece)
           ((eq? msg 'force-move-piece) force-move-piece)
           ((eq? msg 'reset) reset)
+          ((eq? msg 'castle) castle)
           (else (error "Invalid method for BOARD"))))
 
   ;; when make-board is called, call the initialization
