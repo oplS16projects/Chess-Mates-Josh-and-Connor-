@@ -94,6 +94,7 @@
                                   " Wins!")))
           (begin
             (send (get-dc) set-font font)
+            (send (get-dc) set-text-foreground "white")
             (send (get-dc) draw-text msg 130 240))))
       
       ; method to draw an individual piece
