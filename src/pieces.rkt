@@ -49,6 +49,12 @@
 ;; to all chess pieces. This should be thought of as an abstract
 ;; base class, do NOT instantiate these directly.
 (define (make-piece-impl type team tile)
+  
+  ; private variable representing starting tile
+  (define starting-tile tile)
+  
+  (define (has-moved?)
+    (eq? starting-tile (get-tile)))
 
   (define (get-type) type)
 
@@ -64,6 +70,7 @@
           ((eq? msg 'get-team) get-team)
           ((eq? msg 'get-tile) get-tile)
           ((eq? msg 'set-tile) set-tile)
+          ((eq? msg 'has-moved) has-moved?)
           (else (error "Unrecognized method for" (get-type) ': msg)))))
 
 ;; "valid move" means the tile exists, and is either
@@ -110,8 +117,8 @@
         ; begin accumulating moves
         (begin
           
-          ; if y-pos = start-pos, then piece hasn't moved and allow double move
-          (if (and (= y start-y)
+          ; if piece hasn't moved, then allow double move
+          (if (and (call base 'has-moved)
                    (call (call board 'tile-at x (op y 1)) 'is-empty)
                    (call (call board 'tile-at x (op y 2)) 'is-empty))
               (set! moves (cons (call board 'tile-at x (op y 2)) moves))
