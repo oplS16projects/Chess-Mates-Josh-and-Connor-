@@ -161,7 +161,8 @@
   (define (draw-tile x y)
     (((tile-at x y) 'draw)))
 
-  ;; draw method (WIP)
+  ;; draw method (only used for debugging, prints
+  ;; ASCII board in REPL
   (define (draw)
     (for ([i board-max])
       (for ([j board-max])
@@ -199,7 +200,9 @@
             (r-piece (call (tile-at 7 y) 'get-piece))
             (t-piece (call (tile-at 6 y) 'get-piece))
             (b-piece (call (tile-at 5 y) 'get-piece)))
-        (and (not (call k-piece 'has-moved))
+        (and (not (null? k-piece))
+             (not (null? r-piece))
+             (not (call k-piece 'has-moved))
              (not (call r-piece 'has-moved))
              (null? t-piece)
              (null? b-piece)))))
