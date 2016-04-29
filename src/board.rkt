@@ -262,11 +262,3 @@
     (reset)
     dispatch))
 
-;(define b (make-board))
-;
-;(call b 'force-move-piece (call b 'tile-at 4 0) (call b 'tile-at 4 4))
-;(call b 'force-move-piece (call b 'tile-at 3 7) (call b 'tile-at 7 4))
-;
-;((b 'draw))
-;
-;(call b 'find-check black-team)

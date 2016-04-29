@@ -50,11 +50,9 @@
 ;; base class, do NOT instantiate these directly.
 (define (make-piece-impl type team tile)
   
-  ; private variable representing starting tile
-  (define starting-tile tile)
+  (define moved? #f)
   
-  (define (has-moved?)
-    (not (eq? starting-tile (get-tile))))
+  (define (has-moved) moved?)
 
   (define (get-type) type)
 
@@ -63,14 +61,15 @@
   (define (get-tile) tile)
 
   (define (set-tile new-tile)
-    (set! tile new-tile))
+    (begin (set! moved? #t)
+           (set! tile new-tile)))
 
   (λ (msg)
     (cond ((eq? msg 'get-type) get-type)
           ((eq? msg 'get-team) get-team)
           ((eq? msg 'get-tile) get-tile)
           ((eq? msg 'set-tile) set-tile)
-          ((eq? msg 'has-moved) has-moved?)
+          ((eq? msg 'has-moved) has-moved)
           (else (error "Unrecognized method for" (get-type) ': msg)))))
 
 ;; "valid move" means the tile exists, and is either
