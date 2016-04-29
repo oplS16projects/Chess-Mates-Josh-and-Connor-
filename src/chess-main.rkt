@@ -216,5 +216,3 @@
                             on-mouse-over
                             on-canvas-paint))
       (send window show #t))))
-
-(start-game)
