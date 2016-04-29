@@ -54,7 +54,7 @@
   (define starting-tile tile)
   
   (define (has-moved?)
-    (eq? starting-tile (get-tile)))
+    (not (eq? starting-tile (get-tile))))
 
   (define (get-type) type)
 
@@ -118,7 +118,7 @@
         (begin
           
           ; if piece hasn't moved, then allow double move
-          (if (and (call base 'has-moved)
+          (if (and (not (call base 'has-moved))
                    (call (call board 'tile-at x (op y 1)) 'is-empty)
                    (call (call board 'tile-at x (op y 2)) 'is-empty))
               (set! moves (cons (call board 'tile-at x (op y 2)) moves))
